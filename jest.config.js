@@ -3,9 +3,7 @@ module.exports = {
     watchPathIgnorePatterns: ['/__test-cache/', '.+fixtures.+'],
     coveragePathIgnorePatterns: ['node_modules'],
     testEnvironment: 'node',
-    transform: {
-      '.+html$': './src/jest/htmlTransform.js',
-    },
+    
     globals: {
       'ts-jest': {
         diagnostics: {
