@@ -1,4 +1,4 @@
-import { generateName, prepareTests, splitSource } from './prepare';
+import { prepare, generateName, prepareTests, splitSource } from './prepare';
 const appRoot = require('app-root-path');
 
 // There are cases these tests do not cover, many of them.
@@ -147,7 +147,7 @@ describe('prepare.testSource', () => {
 
     expect(prepareTests(script, 'Component')).toBe(`
     import { render } from 'svest';
-    import Component from '../TestComponents/Component.html'
+    import Component from '../test-components/Component.html'
 
     const { container, window, ...testrefs } = render(Component);
 
@@ -172,5 +172,48 @@ describe('prepare.generateName', () => {
     expect(
       generateName(`${appRoot}/123/Compo-n^e~nts/Component-Name.html`)
     ).toBe('$123ComponentsComponentName');
+  });
+});
+
+describe('prepare.prepare', () => {
+  test('should process single file testponents correctly', () => {
+    const script = `<Example />
+
+<script>
+  import Example from './example.html';
+</script>
+
+<script context="test">
+  test('it should do some test', () => {
+    expect(true).toBe(true);
+  })
+</script>
+
+<style>
+  .css {
+    font-family: monospace;
+  }
+</style>`;
+
+    expect(prepare(script, `${appRoot}/test/Components/App.html`)).toEqual({
+      test: `
+    import { render } from 'svest';
+    import TestComponentsApp from '../test-components/TestComponentsApp.html'
+
+    const { container, window, ...testrefs } = render(TestComponentsApp);
+
+    test('it should do some test', () => {
+    expect(true).toBe(true);
+  })`,
+      svelte: `<Example />
+
+<script>
+  import Example from './example.html';
+</script><style>
+  .css {
+    font-family: monospace;
+  }
+</style>`,
+    });
   });
 });

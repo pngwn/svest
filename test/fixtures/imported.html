@@ -1,7 +1,17 @@
 <Example />
 
 <script>
-  import Example from "./example.html";
+  import Example from './example.html';
 </script>
 
-<script context="test"></script>
+<script context="test">
+  test('it should do some test', () => {
+    expect(true).toBe(true);
+  })
+</script>
+
+<style>
+  .css {
+    font-family: monospace;
+  }
+</style>

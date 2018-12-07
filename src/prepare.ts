@@ -40,17 +40,19 @@ export function generateName(path: string): string {
 export function prepareTests(testSource: string, name: string): string {
   return `
     import { render } from 'svest';
-    import ${name} from '../TestComponents/${name}.html'
+    import ${name} from '../test-components/${name}.html'
 
     const { container, window, ...testrefs } = render(${name});
 
     ${testSource}`;
 }
 
-export function prepare(source, path) {
+export function prepare(source, componentPath) {
   const { test, svelte } = splitSource(source);
-  //
-  //    generate path specific name for component
-  //    prepare test script
-  //    prepare test script and write
+  const name = generateName(componentPath);
+
+  return {
+    test: prepareTests(test, name),
+    svelte,
+  };
 }
