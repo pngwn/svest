@@ -1,4 +1,5 @@
-import { prepareTests, splitSource } from './prepare';
+import { generateName, prepareTests, splitSource } from './prepare';
+const appRoot = require('app-root-path');
 
 // There are cases these tests do not cover, many of them.
 // `script` closing tags that appear inside the test block will kill it
@@ -141,7 +142,7 @@ describe('prepare.splitSource', () => {
 });
 
 describe('prepare.testSource', () => {
-  test('should inject the necessary code', () => {
+  test('inject the necessary code', () => {
     const script = 'const func = str => str.toUpperCase();';
 
     expect(prepareTests(script, 'Component')).toBe(`
@@ -149,7 +150,27 @@ describe('prepare.testSource', () => {
     import Component from '../TestComponents/Component.html'
 
     const { container, window, ...testrefs } = render(Component);
-    
+
     const func = str => str.toUpperCase();`);
+  });
+});
+
+describe('prepare.generateName', () => {
+  test('generate a consistent name from the path', () => {
+    expect(generateName(`${appRoot}/test/Components/ComponentName.html`)).toBe(
+      'TestComponentsComponentName'
+    );
+  });
+
+  test('non-alphanumeric characters should be stripped', () => {
+    expect(
+      generateName(`${appRoot}/test/Compo-n^e~nts/Component-Name.html`)
+    ).toBe('TestComponentsComponentName');
+  });
+
+  test('names with leading numbers should have `$` prepended', () => {
+    expect(
+      generateName(`${appRoot}/123/Compo-n^e~nts/Component-Name.html`)
+    ).toBe('$123ComponentsComponentName');
   });
 });

@@ -19,6 +19,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^23.3.10",
+    "@types/node": "^10.12.12",
     "eslint": "^5.9.0",
     "eslint-plugin-html": "^5.0.0",
     "fs-extra": "^7.0.1",
@@ -32,6 +33,7 @@
   },
   "dependencies": {
     "@types/parse5": "^5.0.0",
+    "app-root-path": "^2.1.0",
     "parse5": "^5.1.0"
   }
 }

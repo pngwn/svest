@@ -1,3 +1,6 @@
+const appRoot = require('app-root-path');
+import { sep } from 'path';
+
 interface SourceObject {
   svelte: string;
   test: string;
@@ -27,7 +30,11 @@ export function splitSource(source: string): SourceObject {
 }
 
 export function generateName(path: string): string {
-  return path;
+  const re = new RegExp(`${appRoot}|\.html|\.svelte|${sep}|[^a-zA-Z0-9]`, 'g');
+  return path
+    .replace(re, '')
+    .replace(/(^[a-zA-Z])([^]*)/g, (_, p1, p2) => `${p1.toUpperCase()}${p2}`)
+    .replace(/^[0-9]/, '$$$&');
 }
 
 export function prepareTests(testSource: string, name: string): string {
@@ -36,7 +43,7 @@ export function prepareTests(testSource: string, name: string): string {
     import ${name} from '../TestComponents/${name}.html'
 
     const { container, window, ...testrefs } = render(${name});
-    
+
     ${testSource}`;
 }
 
