@@ -1,4 +1,4 @@
-import { splitSource } from './prepare';
+import { prepareTests, splitSource } from './prepare';
 
 // There are cases these tests do not cover, many of them.
 // `script` closing tags that appear inside the test block will kill it
@@ -137,5 +137,19 @@ describe('prepare.splitSource', () => {
       </script>`,
       test: `console.log("</script>")`,
     });
+  });
+});
+
+describe('prepare.testSource', () => {
+  test('should inject the necessary code', () => {
+    const script = 'const func = str => str.toUpperCase();';
+
+    expect(prepareTests(script, 'Component')).toBe(`
+    import { render } from 'svest';
+    import Component from '../TestComponents/Component.html'
+
+    const { container, window, ...testrefs } = render(Component);
+    
+    const func = str => str.toUpperCase();`);
   });
 });

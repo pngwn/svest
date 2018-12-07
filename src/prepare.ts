@@ -25,3 +25,25 @@ export function splitSource(source: string): SourceObject {
     svelte: matches[1].trim() + matches[3].trim(),
   };
 }
+
+export function generateName(path: string): string {
+  return path;
+}
+
+export function prepareTests(testSource: string, name: string): string {
+  return `
+    import { render } from 'svest';
+    import ${name} from '../TestComponents/${name}.html'
+
+    const { container, window, ...testrefs } = render(${name});
+    
+    ${testSource}`;
+}
+
+export function prepare(source, path) {
+  const { test, svelte } = splitSource(source);
+  //
+  //    generate path specific name for component
+  //    prepare test script
+  //    prepare test script and write
+}
