@@ -6,6 +6,7 @@ import {
   prepareTests,
   splitSource,
 } from '../src/prepare';
+
 const appRoot = require('app-root-path');
 
 test('splitSource: it should split the string into component and test parts', t => {

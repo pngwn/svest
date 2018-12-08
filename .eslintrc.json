@@ -33,9 +33,13 @@
     "plugin:import/errors",
     "plugin:import/warnings"
   ],
-  "plugins": ["html", "ava"],
+  "plugins": ["html", "ava", "typescript", "import"],
+  "parser": "typescript-eslint-parser",
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"
+  },
+  "settings": {
+    "import/resolver": { "typescript": {} }
   }
 }
