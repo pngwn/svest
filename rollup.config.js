@@ -20,8 +20,9 @@ const opts = {
     commonjs(),
     json(),
     typescript({
-      include: 'src/**',
       typescript: require('typescript'),
+      module: 'esnext',
+      allowJs: true,
     }),
   ],
 };
@@ -37,16 +38,16 @@ export default [
     ],
   },
   // jest transform -- transformHtml
-//   {
-//     ...opts,
-//     input: 'src/jest/htmlTransform.ts',
+  //   {
+  //     ...opts,
+  //     input: 'src/jest/htmlTransform.ts',
 
-//     output: {
-//       file: 'dist/transform/index.js',
-//       format: 'cjs',
-//       sourcemap: false,
-//     },
-//   },
+  //     output: {
+  //       file: 'dist/transform/index.js',
+  //       format: 'cjs',
+  //       sourcemap: false,
+  //     },
+  //   },
 
   /* cli/*.js */
 ];

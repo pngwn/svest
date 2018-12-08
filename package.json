@@ -9,7 +9,8 @@
     "lint": "eslint src test/*.js",
     "test": "jest --verbose",
     "test:watch": "jest --watchAll",
-    "test:cov": "jest --coverage --verbose"
+    "test:cov": "jest --coverage --verbose",
+    "ava": "ava"
   },
   "keywords": [
     "test",
@@ -18,10 +19,14 @@
   "author": "pngwn <hello@pngwn.io>",
   "license": "MIT",
   "devDependencies": {
+    "@ava/babel-preset-stage-4": "^2.0.0",
     "@types/jest": "^23.3.10",
     "@types/node": "^10.12.12",
+    "ava": "1.0.0-rc.2",
     "eslint": "^5.9.0",
+    "eslint-plugin-ava": "^5.1.1",
     "eslint-plugin-html": "^5.0.0",
+    "esm": "^3.0.84",
     "fs-extra": "^7.0.1",
     "jest": "^23.6.0",
     "prettier": "^1.15.3",
@@ -29,11 +34,29 @@
     "ts-jest": "^23.10.5",
     "ts-lib": "^0.0.5",
     "ts-node": "^7.0.1",
+    "tslib": "^1.9.3",
     "typescript": "^3.2.1"
   },
   "dependencies": {
     "@types/parse5": "^5.0.0",
     "app-root-path": "^2.1.0",
-    "parse5": "^5.1.0"
+    "parse5": "^5.1.0",
+    "rollup": "^0.67.4",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-json": "^3.1.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-typescript": "^1.0.0"
+  },
+  "ava": {
+    "files": [
+      "test/**/*.js"
+    ],
+    "compileEnhancements": false,
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
   }
 }

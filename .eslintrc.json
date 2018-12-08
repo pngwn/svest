@@ -33,7 +33,7 @@
     "plugin:import/errors",
     "plugin:import/warnings"
   ],
-  "plugins": ["html"],
+  "plugins": ["html", "ava"],
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"
