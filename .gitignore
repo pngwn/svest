@@ -19,6 +19,7 @@ yarn-error.log*
 
 # testy stuff
 coverage
+.nyc_output
 
 # editor
 .vscode/*
