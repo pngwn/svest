@@ -6,7 +6,6 @@ import {
   prepareTests,
   splitSource,
 } from '../src/prepare';
-
 const appRoot = require('app-root-path');
 
 test('splitSource: it should split the string into component and test parts', t => {
@@ -139,7 +138,7 @@ test.skip('splitSource: `</script>` in the test block should be ignored', t => {
     <script>
         import Example from "./example.html";
     </script>
-    <script context="test">console.log("<\/script>")</script>`;
+    <script context="test">console.log("</script>")</script>`;
 
   t.deepEqual(splitSource(file), {
     svelte: `<Example />

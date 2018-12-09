@@ -30,7 +30,7 @@ export function splitSource(source: string): SourceObject {
 }
 
 export function generateName(path: string): string {
-  const re = new RegExp(`${appRoot}|\.html|\.svelte|${sep}|[^a-zA-Z0-9]`, 'g');
+  const re = new RegExp(`${appRoot}|.html|.svelte|${sep}|[^a-zA-Z0-9]`, 'g');
   return path
     .replace(re, '')
     .replace(/(^[a-zA-Z])([^]*)/g, (_, p1, p2) => `${p1.toUpperCase()}${p2}`)
