@@ -6,9 +6,9 @@
   "module": "dist/main.es.js",
   "scripts": {
     "build": "rollup -c",
-    "lint": "eslint src/* test/*.js",
+    "lint": "eslint 'src/**' 'src/utils/**' 'test/*.js'",
     "test": "yarn lint && ava --verbose",
-    "test:watch": "ava --verbose --watchAll",
+    "test:watch": "ava --verbose --watch",
     "test:cov": "yarn lint && nyc ava"
   },
   "keywords": [
@@ -48,13 +48,13 @@
   },
   "nyc": {
     "include": [
-      "**/src/*"
+      "**/src/**"
     ],
     "extension": [
       ".ts"
     ],
     "reporter": [
-      "html"
+      "lcov"
     ]
   },
   "ava": {

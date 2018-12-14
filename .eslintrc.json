@@ -22,6 +22,14 @@
     "arrow-spacing": 2,
     "no-inner-declarations": 0
   },
+  "overrides": [
+    {
+      "files": ["**.d.ts"],
+      "rules": {
+        "import/export": 0
+      }
+    }
+  ],
   "env": {
     "es6": true,
     "browser": true,
