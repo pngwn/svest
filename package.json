@@ -39,6 +39,7 @@
     "typescript-eslint-parser": "^21.0.2"
   },
   "dependencies": {
+    "@pngwn/utils": "^0.1.0",
     "app-root-path": "^2.1.0",
     "rollup": "^0.67.4",
     "rollup-plugin-commonjs": "^9.2.0",

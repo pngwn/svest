@@ -1,5 +1,5 @@
 import { sep, normalize } from 'path';
-import { mergeDeep } from './utils/merge';
+import { merge } from '@pngwn/utils';
 const appRoot = require('app-root-path');
 
 // const pkg = require(`${appRoot}/package.json`);
@@ -25,7 +25,7 @@ export function generateRollup(
       file: `${appRoot}/__test-cache/${output}.js`,
     },
   };
-  return mergeDeep(config, newConfig);
+  return merge(config, newConfig);
 }
 
 export function outputName(filePath: string): string {

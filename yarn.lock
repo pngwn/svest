@@ -288,6 +288,11 @@
   dependencies:
     arrify "^1.0.1"
 
+"@pngwn/utils@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@pngwn/utils/-/utils-0.1.0.tgz#442ce9af029b9de583ba51cae4fb7bcf6ebdaabe"
+  integrity sha512-9UcmEdFs3f7m3yXbgjwv9q/gObArt2AiXefP2fQsuw7xAHuMIOFzI/gGqqKGrXEjTUOcOzxMpNsyqv0RoI71gw==
+
 "@types/estree@0.0.39":
   version "0.0.39"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
