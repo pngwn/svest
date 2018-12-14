@@ -52,7 +52,7 @@ test('generateRollup: should combine configs properly', t => {
 
 // mock-imports
 // later
-test.skip('generateRollup: should combine configs properly, retaining plugins from both configs', t => {
+test('generateRollup: should combine configs properly, retaining user defined plugins', t => {
   const userConfig = {
     input: {
       plugins: [resolve(), commonjs()],
@@ -66,8 +66,7 @@ test.skip('generateRollup: should combine configs properly, retaining plugins fr
     userConfig
   );
 
-  t.plan(3);
+  t.plan(2);
   t.true(result.input.plugins[0].name === 'node-resolve');
   t.true(result.input.plugins[1].name === 'commonjs');
-  t.true(result.input.plugins[2].name === 'commonjs');
 });
