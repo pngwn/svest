@@ -1,5 +1,6 @@
 import { sep, normalize } from 'path';
 import { merge } from '@pngwn/utils';
+import { RollupDirOptions } from 'rollup';
 const appRoot = require('app-root-path');
 
 // const pkg = require(`${appRoot}/package.json`);
@@ -10,7 +11,7 @@ export function generateRollup(
   name: string,
   output: string,
   config: object = {}
-): object {
+): RollupDirOptions {
   const newConfig = {
     input: {
       input: filePath,
