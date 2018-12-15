@@ -3492,6 +3492,15 @@ rollup-plugin-node-resolve@^3.4.0:
     is-module "^1.0.0"
     resolve "^1.1.6"
 
+rollup-plugin-svelte@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-svelte/-/rollup-plugin-svelte-4.4.0.tgz#5bc460447e132192f16a74f6c68ebaabe3d87251"
+  integrity sha512-lRQ8YO807Vu0rjaqM6TfamTlf02rC2fZ/eBhiq0D+XRj1U7g7uGA9uywokv6E9FbaVfhpdhdqxfEsiHgYGOP6Q==
+  dependencies:
+    require-relative "^0.8.7"
+    rollup-pluginutils "^2.3.0"
+    sourcemap-codec "^1.4.1"
+
 rollup-plugin-typescript@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/rollup-plugin-typescript/-/rollup-plugin-typescript-1.0.0.tgz#f7bcefe576011d9d2ebcc725b542ef35fb5005d4"
@@ -3499,7 +3508,7 @@ rollup-plugin-typescript@^1.0.0:
     resolve "^1.8.1"
     rollup-pluginutils "^2.3.1"
 
-rollup-pluginutils@^2.3.1, rollup-pluginutils@^2.3.3:
+rollup-pluginutils@^2.3.0, rollup-pluginutils@^2.3.1, rollup-pluginutils@^2.3.3:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/rollup-pluginutils/-/rollup-pluginutils-2.3.3.tgz#3aad9b1eb3e7fe8262820818840bf091e5ae6794"
   dependencies:
@@ -3833,6 +3842,11 @@ supports-color@^5.3.0, supports-color@^5.4.0, supports-color@^5.5.0:
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.5.0.tgz#e2e69a44ac8772f78a1ec0b35b689df6530efc8f"
   dependencies:
     has-flag "^3.0.0"
+
+svelte@3.0.0-alpha2:
+  version "3.0.0-alpha2"
+  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.0.0-alpha2.tgz#34cac059359ac72ade0f36a3237c29afe41cd3b7"
+  integrity sha512-lV3UemeuXnNWM6xXMYF7Kj92Pcpt5pPWGbUerCW3cZZyizdKuq5lOVsUN7cGWnsxx+PF0FA+LXVqp8U9sCloxA==
 
 symbol-observable@^0.2.2:
   version "0.2.4"

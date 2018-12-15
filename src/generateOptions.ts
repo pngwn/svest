@@ -1,6 +1,7 @@
 import { sep, normalize } from 'path';
 import { merge } from '@pngwn/utils';
-import { RollupDirOptions } from 'rollup';
+import svelte from 'rollup-plugin-svelte';
+
 const appRoot = require('app-root-path');
 
 // const pkg = require(`${appRoot}/package.json`);
@@ -11,11 +12,12 @@ export function generateRollup(
   name: string,
   output: string,
   config: object = {}
-): RollupDirOptions {
+): { input: any; output: any } {
   const newConfig = {
     input: {
       input: filePath,
       perf: false,
+      plugins: [svelte()],
     },
     output: {
       generate: 'dom',
