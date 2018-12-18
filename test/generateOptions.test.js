@@ -29,8 +29,7 @@ test('generateRollup: should generate a valid rollup config', t => {
   const { input, output } = generateRollup(
     'path/to/file',
     'app',
-    '-path-to-file',
-    {}
+    '-path-to-file'
   );
 
   t.plan(4);
@@ -76,7 +75,24 @@ test('generateRollup: should combine configs properly, retaining user defined pl
     userConfig
   );
 
-  t.plan(2);
+  t.plan(3);
   t.true(result.input.plugins[0].name === 'node-resolve');
   t.true(result.input.plugins[1].name === 'commonjs');
+  t.true(result.input.plugins[2].name === 'svelte');
+});
+
+test('generateRollup: there should not be duplication of plugins', t => {
+  const userConfig = {
+    input: {
+      plugins: [resolve(), commonjs()],
+    },
+  };
+
+  const result = generateRollup(
+    'path/to/file',
+    'app',
+    '-path-to-file',
+    userConfig
+  );
+  t.is(result.input.plugins.length, 3);
 });

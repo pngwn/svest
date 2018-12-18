@@ -12,13 +12,18 @@ export function generateRollup(
   filePath: string,
   name: string,
   output: string,
-  config: object = {}
+  config: { input: any; output: any } = { input: { plugins: [] }, output: {} }
 ): { input: any; output: any } {
   const newConfig = {
     input: {
       input: filePath,
       perf: false,
-      plugins: [svelte(), resolve()],
+      plugins: [
+        config.input.plugins.some(v => v.name === 'svelte') ? false : svelte(),
+        config.input.plugins.some(v => v.name === 'node-resolve')
+          ? false
+          : resolve(),
+      ].filter(v => v),
     },
     output: {
       generate: 'dom',

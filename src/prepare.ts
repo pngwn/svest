@@ -1,3 +1,5 @@
+// We aren't doing this any more, will revisit
+
 const appRoot = require('app-root-path');
 import { sep } from 'path';
 
