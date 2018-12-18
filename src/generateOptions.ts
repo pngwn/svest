@@ -1,6 +1,7 @@
 import { sep, normalize } from 'path';
 import { merge } from '@pngwn/utils';
 import svelte from 'rollup-plugin-svelte';
+import resolve from 'rollup-plugin-node-resolve';
 
 const appRoot = require('app-root-path');
 
@@ -17,7 +18,7 @@ export function generateRollup(
     input: {
       input: filePath,
       perf: false,
-      plugins: [svelte()],
+      plugins: [svelte(), resolve()],
     },
     output: {
       generate: 'dom',
@@ -25,7 +26,7 @@ export function generateRollup(
       sourcemap: true,
       format: 'iife',
       name,
-      file: `${appRoot}/__test-cache/${output}.js`,
+      file: `${appRoot}/.svest_output/${output}.js`,
     },
   };
   return merge(config, newConfig);

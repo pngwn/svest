@@ -3843,10 +3843,10 @@ supports-color@^5.3.0, supports-color@^5.4.0, supports-color@^5.5.0:
   dependencies:
     has-flag "^3.0.0"
 
-svelte@3.0.0-alpha2:
-  version "3.0.0-alpha2"
-  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.0.0-alpha2.tgz#34cac059359ac72ade0f36a3237c29afe41cd3b7"
-  integrity sha512-lV3UemeuXnNWM6xXMYF7Kj92Pcpt5pPWGbUerCW3cZZyizdKuq5lOVsUN7cGWnsxx+PF0FA+LXVqp8U9sCloxA==
+svelte@^3.0.0-alpha6:
+  version "3.0.0-alpha6"
+  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.0.0-alpha6.tgz#6cf02ea1b629c6ac14015da32606819b563414bf"
+  integrity sha512-UBYZ1RMyhWVu7XEXfDtDQr9q2XWGuh61Wsy0Rln3BlQwuAv5du3j7bqUOygxVPmQYEWNL6dMBUFjXetG1Ylc9A==
 
 symbol-observable@^0.2.2:
   version "0.2.4"

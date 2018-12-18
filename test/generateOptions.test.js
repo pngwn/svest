@@ -2,6 +2,7 @@ import test from 'ava';
 import { generateRollup, outputName } from '../src/generateOptions';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
+import svelte from 'rollup-plugin-svelte';
 
 const appRoot = require('app-root-path');
 
@@ -10,10 +11,11 @@ test('outputName: output name should return a string based upon the path', t => 
 });
 
 test('generateRollup: should generate a valid rollup config', t => {
-  const validRollup = {
+  const { input: expInput, output: expOutput } = {
     input: {
       input: 'path/to/file',
       perf: false,
+      plugins: [svelte()],
     },
     output: {
       generate: 'dom',
@@ -21,14 +23,21 @@ test('generateRollup: should generate a valid rollup config', t => {
       sourcemap: true,
       format: 'iife',
       name: 'app',
-      file: `${appRoot}/__test-cache/-path-to-file.js`,
+      file: `${appRoot}/.svest_output/-path-to-file.js`,
     },
   };
-
-  t.deepEqual(
-    generateRollup('path/to/file', 'app', '-path-to-file', {}),
-    validRollup
+  const { input, output } = generateRollup(
+    'path/to/file',
+    'app',
+    '-path-to-file',
+    {}
   );
+
+  t.plan(4);
+  t.deepEqual(output, expOutput);
+  t.is(input.input, expInput.input);
+  t.is(input.perf, expInput.perf);
+  t.true(input.plugins[0].name === expInput.plugins[0].name);
 });
 
 test('generateRollup: should combine configs properly', t => {
@@ -45,9 +54,10 @@ test('generateRollup: should combine configs properly', t => {
     userConfig
   );
 
-  t.plan(2);
+  t.plan(3);
   t.true(result.input.plugins[0].name === 'node-resolve');
   t.true(result.input.plugins[1].name === 'commonjs');
+  t.true(result.input.plugins[2].name === 'svelte');
 });
 
 // mock-imports
