@@ -10,11 +10,8 @@ const clean = async () =>
 
 test('it should compile without dying', async t => {
   const file = `${appRoot}/test/fixtures/imported.html`;
-  await compile(file, 'app');
-  const compiled = await fs.readFile(
-    normalize(`${appRoot}/.svest_output/-test-fixtures-imported-html.js`),
-    'utf8'
-  );
+  const compiled = await compile(file, 'app');
+
   t.truthy(compiled);
   await clean();
 });
