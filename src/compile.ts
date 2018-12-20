@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { generateOptions } from './generateOptions';
+import { generateOptions } from './bundle/generateOptions';
 import { rollup } from 'rollup';
 
 export async function compile(filePath: string, name: string) {

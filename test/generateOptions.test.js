@@ -1,5 +1,5 @@
 import test from 'ava';
-import { generateRollup, outputName } from '../src/generateOptions';
+import { generateRollup, outputName } from '../src/bundle/generateOptions';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import svelte from 'rollup-plugin-svelte';
