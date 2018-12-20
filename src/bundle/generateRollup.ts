@@ -10,16 +10,16 @@ export function generateRollup(
   output: string,
   config: { input: any; output: any } = { input: { plugins: [] }, output: {} }
 ): { input: any; output: any } {
+  if (config.input.plugins.findIndex(v => v.name === 'svelte') === -1) {
+    throw new Error(
+      'Your rollup config must provide rollup-plugin-svelte in order to compile Svelte components.'
+    );
+  }
   const newConfig = {
     input: {
       input: filePath,
       perf: false,
-      plugins: [
-        config.input.plugins.some(v => v.name === 'svelte') ? false : svelte(),
-        config.input.plugins.some(v => v.name === 'node-resolve')
-          ? false
-          : resolve(),
-      ].filter(v => v),
+      plugins: [],
     },
     output: {
       generate: 'dom',

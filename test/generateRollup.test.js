@@ -7,7 +7,7 @@ import svelte from 'rollup-plugin-svelte';
 
 const appRoot = require('app-root-path');
 
-test('generateRollup: should generate a valid rollup config', t => {
+test('should generate a valid rollup config', t => {
   const { input: expInput, output: expOutput } = {
     input: {
       input: 'path/to/file',
@@ -26,7 +26,8 @@ test('generateRollup: should generate a valid rollup config', t => {
   const { input, output } = generateRollup(
     'path/to/file',
     'app',
-    '-path-to-file'
+    '-path-to-file',
+    { input: { plugins: [svelte()] } }
   );
 
   t.plan(4);
@@ -36,10 +37,10 @@ test('generateRollup: should generate a valid rollup config', t => {
   t.true(input.plugins[0].name === expInput.plugins[0].name);
 });
 
-test('generateRollup: should combine configs properly', t => {
+test('should combine configs properly', t => {
   const userConfig = {
     input: {
-      plugins: [resolve(), commonjs()],
+      plugins: [svelte(), resolve(), commonjs()],
     },
   };
 
@@ -51,45 +52,21 @@ test('generateRollup: should combine configs properly', t => {
   );
 
   t.plan(3);
-  t.true(result.input.plugins[0].name === 'node-resolve');
-  t.true(result.input.plugins[1].name === 'commonjs');
-  t.true(result.input.plugins[2].name === 'svelte');
+  t.true(result.input.plugins[0].name === 'svelte');
+  t.true(result.input.plugins[1].name === 'node-resolve');
+  t.true(result.input.plugins[2].name === 'commonjs');
 });
 
 // mock-imports
 // later
-test('generateRollup: should combine configs properly, retaining user defined plugins', t => {
+test('if there is no svelte plugin present, it will throw', t => {
   const userConfig = {
     input: {
       plugins: [resolve(), commonjs()],
     },
   };
 
-  const result = generateRollup(
-    'path/to/file',
-    'app',
-    '-path-to-file',
-    userConfig
+  t.throws(() =>
+    generateRollup('path/to/file', 'app', '-path-to-file', userConfig)
   );
-
-  t.plan(3);
-  t.true(result.input.plugins[0].name === 'node-resolve');
-  t.true(result.input.plugins[1].name === 'commonjs');
-  t.true(result.input.plugins[2].name === 'svelte');
-});
-
-test('generateRollup: there should not be duplication of plugins', t => {
-  const userConfig = {
-    input: {
-      plugins: [resolve(), commonjs()],
-    },
-  };
-
-  const result = generateRollup(
-    'path/to/file',
-    'app',
-    '-path-to-file',
-    userConfig
-  );
-  t.is(result.input.plugins.length, 3);
 });
