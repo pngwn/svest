@@ -59,7 +59,7 @@ test('should combine configs properly', t => {
 
 // mock-imports
 // later
-test('if there is no svelte plugin present, it will throw', t => {
+test('if there is no svelte plugin present, it should throw', t => {
   const userConfig = {
     input: {
       plugins: [resolve(), commonjs()],
@@ -68,5 +68,18 @@ test('if there is no svelte plugin present, it will throw', t => {
 
   t.throws(() =>
     generateRollup('path/to/file', 'app', '-path-to-file', userConfig)
+  );
+});
+
+test('if there is no svelte plugin present, it should throw with a helpful error message', t => {
+  const userConfig = {
+    input: {
+      plugins: [resolve(), commonjs()],
+    },
+  };
+
+  t.throws(
+    () => generateRollup('path/to/file', 'app', '-path-to-file', userConfig),
+    'Your rollup config must include rollup-plugin-svelte in order to compile Svelte components.'
   );
 });
