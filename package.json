@@ -27,8 +27,8 @@
     "eslint-plugin-html": "^5.0.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-typescript": "^0.14.0",
-    "esm": "^3.0.84",
     "fs-extra": "^7.0.1",
+    "mock-require": "^3.0.2",
     "nyc": "^13.1.0",
     "prettier": "^1.15.3",
     "prettier-eslint": "^8.8.2",
@@ -43,6 +43,7 @@
   "dependencies": {
     "@pngwn/utils": "^0.1.0",
     "app-root-path": "^2.1.0",
+    "esm": "^3.0.84",
     "rollup": "^0.67.4",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-json": "^3.1.0",
