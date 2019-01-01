@@ -1,11 +1,6 @@
 import test from 'ava';
 const mockRequire = require('mock-require');
 
-// mockRequire('../package.json', {
-//   svest: { bundler: 'rollup', bundlerConfig: './test/fixtures/rollup.test.js' },
-// });
-// const { svest } = require('../package.json');
-
 import { outputName, generateOptions } from '../src/bundle/generateOptions';
 
 const appRoot = require('app-root-path');
@@ -25,7 +20,7 @@ test('generateOptions: if there is no test config or svest field in pkg.json it 
   );
 });
 
-test('generateOptions: config type and location passed to svest should be used', async t => {
+test('generateOptions: rollup configs should be processed correctly', async t => {
   mockRequire('../package.json', {
     svest: {
       bundler: 'rollup',
@@ -35,4 +30,32 @@ test('generateOptions: config type and location passed to svest should be used',
 
   const bundle = await generateOptions('path/to/file', 'app');
   t.false(bundle.input.perf);
+});
+
+test('generateOptions: webpack configs should be processed correctly', async t => {
+  mockRequire('../package.json', {
+    svest: {
+      bundler: 'webpack',
+      bundlerConfig: './test/fixtures/webpack.test.js',
+    },
+  });
+
+  const bundle = await generateOptions('path/to/file', 'app');
+  t.truthy(bundle.module);
+});
+
+test('generateOptions: other bundler types should throw an error', async t => {
+  mockRequire('../package.json', {
+    svest: {
+      bundler: 'parcel',
+      bundlerConfig: './test/fixtures/webpack.test.js',
+    },
+  });
+
+  const err = await t.throwsAsync(generateOptions('path/to/file', 'app'));
+  t.true(err instanceof Error);
+  t.is(
+    err.message,
+    "Cannot recognise bundler option. Must be one of 'webpack' or 'rollup'."
+  );
 });

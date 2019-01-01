@@ -1,13 +1,9 @@
-import { sep, normalize, resolve, join } from 'path';
-// import fse from 'fs-extra';
+import { sep, normalize, join } from 'path';
 import { generateRollup } from './generateRollup';
+import { generateWebpack } from './generateWebpack';
 import esm from 'esm';
-// import { svest } from 'src/main';
 
 const appRoot = require('app-root-path');
-
-// const pkg = require(`${appRoot}/package.json`);
-// const { bundlerConfig, bundler } = pkg.svest;
 
 export function outputName(filePath: string): string {
   return normalize(filePath)
@@ -34,12 +30,11 @@ export async function generateOptions(filePath: string, name: string) {
     }
   }
 
-  const configPath = join(appRoot.path, config.bundlerConfig);
+  const configPath = normalize(join(appRoot.path, config.bundlerConfig));
   let bundlerConfig;
 
   try {
     bundlerConfig = require(configPath);
-    console.log(bundlerConfig);
   } catch (e) {
     try {
       bundlerConfig = esm(module)(configPath).default;
@@ -49,5 +44,14 @@ export async function generateOptions(filePath: string, name: string) {
   }
 
   const output = outputName(filePath);
-  return generateRollup(filePath, name, output, bundlerConfig);
+
+  if (config.bundler.toLowerCase() === 'rollup') {
+    return generateRollup(filePath, name, output, bundlerConfig);
+  } else if (config.bundler.toLowerCase() === 'webpack') {
+    return generateWebpack(filePath, name, output, bundlerConfig);
+  } else {
+    throw new Error(
+      "Cannot recognise bundler option. Must be one of 'webpack' or 'rollup'."
+    );
+  }
 }
