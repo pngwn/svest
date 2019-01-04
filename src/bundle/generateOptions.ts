@@ -1,7 +1,7 @@
 import { sep, normalize, join } from 'path';
 import { generateRollup } from './generateRollup';
 import { generateWebpack } from './generateWebpack';
-import { loadSvestConfig } from './loadConfig';
+import { loadSvestConfig, loadBundlerConfig } from './loadConfig';
 import esm from 'esm';
 
 const appRoot = require('app-root-path');
@@ -18,17 +18,7 @@ export async function generateOptions(filePath: string, name: string) {
   let config = loadSvestConfig();
 
   const configPath = normalize(join(appRoot.path, config.bundlerConfig));
-  let bundlerConfig;
-
-  try {
-    bundlerConfig = require(configPath).default || require(configPath);
-  } catch (e) {
-    try {
-      bundlerConfig = esm(module)(configPath).default;
-    } catch {
-      throw new Error(`Could not load bundler config from "${configPath}".`);
-    }
-  }
+  let bundlerConfig = loadBundlerConfig(configPath);
 
   const output = outputName(filePath);
 
