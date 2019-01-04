@@ -37,7 +37,7 @@ test('generateOptions: rollup configs should be processed correctly', async () =
   });
 
   const bundle = await generateOptions('path/to/file', 'app');
-  expect(bundle.input.perf).toBeFalsy();
+  expect(bundle[1].input.perf).toBeFalsy();
 });
 
 test('generateOptions: webpack configs should be processed correctly', async () => {
@@ -49,7 +49,7 @@ test('generateOptions: webpack configs should be processed correctly', async () 
   });
 
   const bundle = await generateOptions('path/to/file', 'app');
-  expect(bundle.module).toBeTruthy();
+  expect(bundle[1].module).toBeTruthy();
 });
 
 test('generateOptions: other bundler types should throw an error', async () => {

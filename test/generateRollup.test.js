@@ -68,3 +68,17 @@ test('if there is no svelte plugin present, it should throw', () => {
     'Your rollup config must include rollup-plugin-svelte in order to compile Svelte components.'
   );
 });
+
+test('if there is no svelte plugin present, it should throw', () => {
+  const userConfig = {
+    input: {
+      plugins: [resolve(), commonjs()],
+    },
+  };
+
+  expect(() =>
+    generateRollup('path/to/file', 'app', '-path-to-file', userConfig)
+  ).toThrowError(
+    'Your rollup config must include rollup-plugin-svelte in order to compile Svelte components.'
+  );
+});

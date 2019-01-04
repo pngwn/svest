@@ -7,7 +7,7 @@ export function generateWebpack(
   name: string,
   output: string,
   config: { module: any; [x: string]: any }
-) {
+): any {
   if (
     config.module.rules.findIndex(v => v.use.loader === 'svelte-loader') === -1
   ) {
