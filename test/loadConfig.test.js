@@ -1,4 +1,5 @@
-import { loadSvestConfig } from '../src/bundle/loadConfig';
+import { loadSvestConfig, loadBundlerConfig } from '../src/bundle/loadConfig';
+const appRoot = require('app-root-path');
 
 afterEach(() => jest.resetModules());
 
@@ -15,7 +16,7 @@ describe('loadSvestConfig', () => {
     }
   });
 
-  test('rollup configs should be processed correctly', async () => {
+  test('rollup settings should be processed correctly', async () => {
     jest.setMock('../package.json', {
       svest: {
         bundler: 'rollup',
@@ -28,7 +29,7 @@ describe('loadSvestConfig', () => {
     expect(config.bundler).toBe('rollup');
   });
 
-  test('webpack configs should be processed correctly', async () => {
+  test('webpack settings should be processed correctly', async () => {
     jest.setMock('../package.json', {
       svest: {
         bundler: 'webpack',
@@ -38,5 +39,34 @@ describe('loadSvestConfig', () => {
 
     const config = await loadSvestConfig();
     expect(config.bundler).toBe('webpack');
+  });
+});
+
+describe('loadWebpack', () => {
+  test('if there is no bundler config it should throw an error', async () => {
+    const configPath = 'path/that/does/not/exist';
+    try {
+      await loadBundlerConfig(configPath);
+    } catch (e) {
+      expect(e).toEqual(
+        new Error(`Could not load bundler config from "${configPath}".`)
+      );
+    }
+  });
+
+  test('rollup configs should be loaded correctly', async () => {
+    const config = await loadBundlerConfig(
+      `${appRoot}/test/fixtures/rollup.test.js`
+    );
+
+    expect(typeof config.input).toBe('object');
+  });
+
+  test('webpack configs should be loaded correctly', async () => {
+    const config = await loadBundlerConfig(
+      `${appRoot}/test/fixtures/webpack.test.js`
+    );
+
+    expect(typeof config.module).toBe('object');
   });
 });
