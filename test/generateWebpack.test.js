@@ -1,10 +1,8 @@
-import test from 'ava';
-
 import { generateWebpack } from '../src/bundle/generateWebpack';
 
 const appRoot = require('app-root-path');
 
-test('should generate a valid webpack config', t => {
+test('should generate a valid webpack config', () => {
   const expected = {
     entry: {
       bundle: 'path/to/file',
@@ -52,12 +50,12 @@ test('should generate a valid webpack config', t => {
       ],
     },
   });
-  t.plan(2);
-  t.deepEqual(output, expected);
-  t.is(output.module.rules[0].use.loader, 'svelte-loader');
+
+  expect(output).toEqual(expected);
+  expect(output.module.rules[0].use.loader).toBe('svelte-loader');
 });
 
-test('should take additional webpack loaders', t => {
+test('should take additional webpack loaders', () => {
   const output = generateWebpack('path/to/file', 'app', '-path-to-file', {
     module: {
       rules: [
@@ -81,12 +79,12 @@ test('should take additional webpack loaders', t => {
       ],
     },
   });
-  t.plan(2);
-  t.is(output.module.rules.length, 2);
-  t.is(output.module.rules[1].use.loader, 'file-loader');
+
+  expect(output.module.rules.length).toBe(2);
+  expect(output.module.rules[1].use.loader).toBe('file-loader');
 });
 
-test('if there is no svelte-loader present, it should throw', t => {
+test('if there is no svelte-loader present, it should throw with a helpful error message', () => {
   const userConfig = {
     module: {
       rules: [
@@ -99,26 +97,10 @@ test('if there is no svelte-loader present, it should throw', t => {
       ],
     },
   };
-  t.throws(() =>
+
+  expect(() =>
     generateWebpack('path/to/file', 'app', '-path-to-file', userConfig)
-  );
-});
-
-test('if there is no svelte-loader present, it should throw with a helpful error message', t => {
-  const userConfig = {
-    module: {
-      rules: [
-        {
-          test: /\.(png|jpg|gif)$/,
-          use: {
-            loader: 'file-loader',
-          },
-        },
-      ],
-    },
-  };
-  t.throws(
-    () => generateWebpack('path/to/file', 'app', '-path-to-file', userConfig),
+  ).toThrowError(
     'Your rollup config must include svelte-loader in order to compile Svelte components.'
   );
 });

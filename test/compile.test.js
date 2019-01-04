@@ -1,4 +1,3 @@
-import test from 'ava';
 import { compile } from '../src/compile';
 import fs from 'fs-extra';
 import { normalize } from 'path';

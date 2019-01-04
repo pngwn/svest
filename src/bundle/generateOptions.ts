@@ -34,12 +34,12 @@ export async function generateOptions(filePath: string, name: string) {
   let bundlerConfig;
 
   try {
-    bundlerConfig = require(configPath);
+    bundlerConfig = require(configPath).default || require(configPath);
   } catch (e) {
     try {
       bundlerConfig = esm(module)(configPath).default;
     } catch {
-      throw new Error(e);
+      throw new Error(`Could not load bundler config from "${configPath}".`);
     }
   }
 
