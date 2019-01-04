@@ -7,7 +7,7 @@ export default {
         use: {
           loader: 'svelte-loader',
           options: {
-            format: 'cjs',
+            format: 'spoon',
             css: false,
           },
         },

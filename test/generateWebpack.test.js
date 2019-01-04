@@ -4,9 +4,7 @@ const appRoot = require('app-root-path');
 
 test('should generate a valid webpack config', () => {
   const expected = {
-    entry: {
-      bundle: 'path/to/file',
-    },
+    entry: 'path/to/file',
     resolve: {
       extensions: ['.js', '.html'],
     },

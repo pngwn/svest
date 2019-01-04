@@ -1,13 +1,13 @@
 export default {
   module: {
-    rules: [
+    darules: [
       {
         test: /\.html$/,
         exclude: /node_modules/,
         use: {
           loader: 'svelte-loader',
           options: {
-            format: 'cjs',
+            format: 'spoon',
             css: false,
           },
         },

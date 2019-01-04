@@ -2,18 +2,64 @@ import { compile } from '../src/compile';
 
 const appRoot = require('app-root-path');
 
-afterAll(() => jest.resetModules());
-
-jest.setMock('../package.json', {
-  svest: {
-    bundler: 'rollup',
-    bundlerConfig: './test/fixtures/rollup.test.js',
-  },
-});
+afterEach(() => jest.resetModules());
 
 test('it should compile without dying', async () => {
+  jest.setMock('../package.json', {
+    svest: {
+      bundler: 'rollup',
+      bundlerConfig: './test/fixtures/rollup.test.js',
+    },
+  });
+
   const file = `${appRoot}/test/fixtures/imported.html`;
   const compiled = await compile(file, 'app');
 
   expect(compiled).toBeTruthy();
+});
+
+test('it should compile without dying: 2', async () => {
+  jest.setMock('../package.json', {
+    svest: {
+      bundler: 'webpack',
+      bundlerConfig: './test/fixtures/webpack.test.js',
+    },
+  });
+
+  const file = `${appRoot}/test/fixtures/imported.html`;
+  const compiled = await compile(file, 'app');
+
+  expect(compiled).toBeTruthy();
+});
+
+test('a bad webpack config should throw an error', async () => {
+  jest.setMock('../package.json', {
+    svest: {
+      bundler: 'webpack',
+      bundlerConfig: './test/fixtures/webpack.badconfig.js',
+    },
+  });
+
+  const file = `${appRoot}/test/fixtures/imported.html`;
+  try {
+    await compile(file, 'app');
+  } catch (e) {
+    expect(e).toBeTruthy();
+  }
+});
+
+test('a really bad webpack config should also throw an error', async () => {
+  jest.setMock('../package.json', {
+    svest: {
+      bundler: 'webpack',
+      bundlerConfig: './test/fixtures/webpack.badconfig.js',
+    },
+  });
+
+  const file = `${appRoot}/test/fixtures/imported.html`;
+  try {
+    await compile(file, 'app');
+  } catch (e) {
+    expect(e).toBeTruthy();
+  }
 });

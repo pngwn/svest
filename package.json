@@ -43,17 +43,20 @@
     "rollup-plugin-typescript": "^1.0.0",
     "sinon": "^7.2.2",
     "svelte": "3.0.0-alpha16",
+    "svelte-loader": "^2.12.0",
     "ts-jest": "^23.10.5",
     "ts-lib": "^0.0.5",
     "ts-node": "^7.0.1",
     "tslib": "^1.9.3",
     "typescript": "^3.2.1",
-    "typescript-eslint-parser": "^21.0.2"
+    "typescript-eslint-parser": "^21.0.2",
+    "webpack": "^4.28.3"
   },
   "dependencies": {
     "@pngwn/utils": "^0.1.0",
     "app-root-path": "^2.1.0",
-    "esm": "^3.0.84"
+    "esm": "^3.0.84",
+    "memory-fs": "^0.4.1"
   },
   "nyc": {
     "include": [
@@ -81,5 +84,9 @@
     "require": [
       "ts-node/register"
     ]
+  },
+  "svest": {
+    "bundler": "webpack",
+    "bundlerConfig": "./test/fixtures/webpack.test.js"
   }
 }

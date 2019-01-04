@@ -1,4 +1,5 @@
 import { merge } from '@pngwn/utils';
+import path from 'path';
 
 const appRoot = require('app-root-path');
 
@@ -16,14 +17,12 @@ export function generateWebpack(
     );
   }
   const newConfig = {
-    entry: {
-      bundle: filePath,
-    },
+    entry: filePath,
     resolve: {
       extensions: ['.js', '.html'],
     },
     output: {
-      path: `${appRoot}/.svest_output`,
+      path: path.resolve(`${appRoot}/.svest_output`),
       filename: `${output}.js`,
     },
     mode: 'production',
