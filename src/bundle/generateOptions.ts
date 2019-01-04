@@ -1,6 +1,7 @@
 import { sep, normalize, join } from 'path';
 import { generateRollup } from './generateRollup';
 import { generateWebpack } from './generateWebpack';
+import { loadSvestConfig } from './loadConfig';
 import esm from 'esm';
 
 const appRoot = require('app-root-path');
@@ -14,21 +15,7 @@ export function outputName(filePath: string): string {
 }
 
 export async function generateOptions(filePath: string, name: string) {
-  let config;
-  try {
-    config = require(`${appRoot}/svest.config.js`);
-  } catch {
-    try {
-      config = require(`${appRoot}/package.json`).svest;
-      if (config === undefined) {
-        throw new Error();
-      }
-    } catch {
-      throw new Error(
-        "No config file detected. Ensure there is either a 'svest.config.js' file in your app root or a 'svest' field in your 'package.json'."
-      );
-    }
-  }
+  let config = loadSvestConfig();
 
   const configPath = normalize(join(appRoot.path, config.bundlerConfig));
   let bundlerConfig;
