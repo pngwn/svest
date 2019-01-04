@@ -2,7 +2,6 @@ import { sep, normalize, join } from 'path';
 import { generateRollup } from './generateRollup';
 import { generateWebpack } from './generateWebpack';
 import { loadSvestConfig, loadBundlerConfig } from './loadConfig';
-import esm from 'esm';
 
 const appRoot = require('app-root-path');
 
@@ -15,11 +14,9 @@ export function outputName(filePath: string): string {
 }
 
 export async function generateOptions(filePath: string, name: string) {
-  let config = loadSvestConfig();
-
+  const config = loadSvestConfig();
   const configPath = normalize(join(appRoot.path, config.bundlerConfig));
-  let bundlerConfig = loadBundlerConfig(configPath);
-
+  const bundlerConfig = loadBundlerConfig(configPath);
   const output = outputName(filePath);
 
   if (config.bundler.toLowerCase() === 'rollup') {
