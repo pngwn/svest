@@ -1,7 +1,7 @@
 module.exports = {
   preset: 'ts-jest/presets/js-with-ts',
   watchPathIgnorePatterns: ['/__test-cache/', '.+fixtures.+'],
-  coveragePathIgnorePatterns: ['node_modules'],
+  coveragePathIgnorePatterns: ['node_modules', '.+fixtures.+'],
   testPathIgnorePatterns: ['/node_modules/', '.+fixtures.+'],
   testEnvironment: 'node',
 
