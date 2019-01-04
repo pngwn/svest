@@ -28,12 +28,10 @@ test('should generate a valid rollup config', () => {
     { input: { plugins: [svelte()] } }
   );
 
-  //t.plan(4);
   expect(output).toEqual(expOutput);
   expect(input.input).toEqual(expInput.input);
   expect(input.perf).toEqual(expInput.perf);
   expect(input.plugins[0].name).toEqual(expInput.plugins[0].name);
-  // t.true(input.plugins[0].name === expInput.plugins[0].name);
 });
 
 test('should combine configs properly', () => {

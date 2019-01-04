@@ -5352,10 +5352,10 @@ supports-color@^5.3.0, supports-color@^5.4.0, supports-color@^5.5.0:
   dependencies:
     has-flag "^3.0.0"
 
-svelte@^3.0.0-alpha6:
-  version "3.0.0-alpha6"
-  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.0.0-alpha6.tgz#6cf02ea1b629c6ac14015da32606819b563414bf"
-  integrity sha512-UBYZ1RMyhWVu7XEXfDtDQr9q2XWGuh61Wsy0Rln3BlQwuAv5du3j7bqUOygxVPmQYEWNL6dMBUFjXetG1Ylc9A==
+svelte@3.0.0-alpha16:
+  version "3.0.0-alpha16"
+  resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.0.0-alpha16.tgz#67b3f42ae45e225d10e39ceca3cb3f4a91c25a62"
+  integrity sha512-jU9a/4SOLIuLOYLExG4ySugyhThp7aIUNJ4iZdoRsJmMgpm+DBDVLFEKzFQ5YjSU9spdnTOJwdBNpM/GNskqnQ==
 
 symbol-observable@^0.2.2:
   version "0.2.4"
