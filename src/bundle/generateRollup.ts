@@ -6,9 +6,9 @@ export function generateRollup(
   filePath: string,
   name: string,
   output: string,
-  config: { input: any; output: any }
+  config: { input: any; output: any; plugins: any }
 ): any {
-  if (config.input.plugins.findIndex(v => v.name === 'svelte') === -1) {
+  if (config.plugins.findIndex(v => v.name === 'svelte') === -1) {
     throw new Error(
       'Your rollup config must include rollup-plugin-svelte in order to compile Svelte components.'
     );
@@ -18,7 +18,7 @@ export function generateRollup(
     input: {
       input: filePath,
       perf: false,
-      plugins: [],
+      plugins: config.plugins,
     },
     output: {
       generate: 'dom',
@@ -29,6 +29,6 @@ export function generateRollup(
       file: `${appRoot}/.svest_output/${output}.js`,
     },
   };
-
+  return newConfig;
   return merge(config, newConfig);
 }

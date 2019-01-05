@@ -1,3 +1,4 @@
 import svelte from 'rollup-plugin-svelte';
+import resolve from 'rollup-plugin-node-resolve';
 
-module.exports = { input: { plugins: [svelte()] } };
+module.exports = { plugins: [svelte(), resolve()] };

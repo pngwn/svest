@@ -25,7 +25,7 @@ export async function compile(filePath: string, name: string) {
     );
   }
 
-  console.log(code, bundler, config);
+  // console.log(code, bundler, config);
   return { code: code.code, map: code.map };
 }
 

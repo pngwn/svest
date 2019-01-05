@@ -1,4 +1,4 @@
-import esm from 'esm';
+// import esm from 'esm';
 const appRoot = require('app-root-path');
 
 export function loadSvestConfig(): { bundler: string; bundlerConfig: string } {
@@ -28,11 +28,13 @@ export function loadBundlerConfig(configPath: string) {
   try {
     bundlerConfig = require(configPath).default || require(configPath);
   } catch (e) {
-    // try {
-    //   bundlerConfig = esm(module)(configPath).default;
-    // } catch {
-    throw new Error(`Could not load bundler config from "${configPath}".`);
-    // }
+    try {
+      bundlerConfig =
+        require('esm')(module)(configPath).default ||
+        require('esm')(module)(configPath);
+    } catch {
+      throw new Error(`Could not load bundler config from "${configPath}".`);
+    }
   }
 
   return bundlerConfig;

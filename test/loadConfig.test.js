@@ -59,7 +59,7 @@ describe('loadWebpack', () => {
       `${appRoot}/test/fixtures/rollup.test.js`
     );
 
-    expect(typeof config.input).toBe('object');
+    expect(typeof config.plugins).toBe('object');
   });
 
   test('webpack configs should be loaded correctly', async () => {
@@ -70,11 +70,11 @@ describe('loadWebpack', () => {
     expect(typeof config.module).toBe('object');
   });
 
-  test('webpack configs should be loaded correctly', async () => {
+  test('different rollup configs should be loaded correctly', async () => {
     const config = await loadBundlerConfig(
       `${appRoot}/test/fixtures/rollup.testmod.js`
     );
 
-    expect(typeof config.input).toBe('object');
+    expect(typeof config.plugins).toBe('object');
   });
 });

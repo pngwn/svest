@@ -85,5 +85,9 @@
     "require": [
       "ts-node/register"
     ]
+  },
+  "svest": {
+    "bundler": "rollup",
+    "bundlerConfig": "./test/fixtures/rollup.test.js"
   }
 }

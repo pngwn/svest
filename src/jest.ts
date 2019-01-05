@@ -5,7 +5,7 @@ export const process = (_s, filePath: string, _c, _o) => {
   let code, map, error;
   compile(filePath, 'App')
     .then(comp => {
-      console.log(comp);
+      // console.log(comp);
       code = comp.code;
       map = comp.map;
     })

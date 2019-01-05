@@ -25,7 +25,7 @@ test('should generate a valid rollup config', () => {
     'path/to/file',
     'app',
     '-path-to-file',
-    { input: { plugins: [svelte()] } }
+    { plugins: [svelte()] }
   );
 
   expect(output).toEqual(expOutput);
@@ -36,9 +36,7 @@ test('should generate a valid rollup config', () => {
 
 test('should combine configs properly', () => {
   const userConfig = {
-    input: {
-      plugins: [svelte(), resolve(), commonjs()],
-    },
+    plugins: [svelte(), resolve(), commonjs()],
   };
 
   const result = generateRollup(
@@ -57,9 +55,7 @@ test('should combine configs properly', () => {
 // later
 test('if there is no svelte plugin present, it should throw', () => {
   const userConfig = {
-    input: {
-      plugins: [resolve(), commonjs()],
-    },
+    plugins: [resolve(), commonjs()],
   };
 
   expect(() =>
@@ -71,9 +67,7 @@ test('if there is no svelte plugin present, it should throw', () => {
 
 test('if there is no svelte plugin present, it should throw', () => {
   const userConfig = {
-    input: {
-      plugins: [resolve(), commonjs()],
-    },
+    plugins: [resolve(), commonjs()],
   };
 
   expect(() =>
