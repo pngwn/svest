@@ -3,18 +3,10 @@ import commonjs from 'rollup-plugin-commonjs';
 import json from 'rollup-plugin-json';
 import typescript from 'rollup-plugin-typescript';
 import pkg from './package.json';
+import fs from 'fs';
+import path from 'path';
 
 const opts = {
-  input: 'src/index.ts',
-  external: id =>
-    ![
-      'cache',
-      'compile',
-      'generateOptions',
-      'main.ts',
-      'transform',
-      'htmlTransform',
-    ].some(v => id.indexOf(v) > -1),
   plugins: [
     resolve({ preferBuiltins: true }),
     commonjs(),
@@ -27,27 +19,32 @@ const opts = {
   ],
 };
 
+let files = fs
+  .readdirSync(path.join(__dirname, 'src'))
+  .filter(v => path.extname(v) && v.indexOf('d.ts') < 0)
+  .map(v => path.join('src', v));
+
+files = files
+  .concat(
+    fs
+      .readdirSync(path.join(__dirname, 'src', 'bundle'))
+      .map(v => path.join('src', 'bundle', v))
+  )
+  .reduce((acc, next) => {
+    return {
+      ...acc,
+      [next.replace('src/', '').replace('.ts', '')]: next,
+    };
+  }, {});
+
 export default [
-  // helper utils -- main
   {
     ...opts,
-    input: 'src/main.ts',
+    input: files,
+    external: v => !v.match(/.*\/src\/.*/),
     output: [
-      { file: pkg.module, format: 'es', sourcemap: false },
-      { file: pkg.main, format: 'cjs', sourcemap: false },
+      { dir: 'dist/es', format: 'es', sourcemap: false },
+      { dir: 'dist/cjs', format: 'cjs', sourcemap: false },
     ],
   },
-  // jest transform -- transformHtml
-  //   {
-  //     ...opts,
-  //     input: 'src/jest/htmlTransform.ts',
-
-  //     output: {
-  //       file: 'dist/transform/index.js',
-  //       format: 'cjs',
-  //       sourcemap: false,
-  //     },
-  //   },
-
-  /* cli/*.js */
 ];
