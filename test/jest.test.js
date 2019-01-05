@@ -1,4 +1,4 @@
-import { process } from '../src/jest';
+import { process } from '../jest';
 
 const appRoot = require('app-root-path');
 

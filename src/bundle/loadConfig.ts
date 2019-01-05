@@ -28,11 +28,11 @@ export function loadBundlerConfig(configPath: string) {
   try {
     bundlerConfig = require(configPath).default || require(configPath);
   } catch (e) {
-    try {
-      bundlerConfig = esm(module)(configPath).default;
-    } catch {
-      throw new Error(`Could not load bundler config from "${configPath}".`);
-    }
+    // try {
+    //   bundlerConfig = esm(module)(configPath).default;
+    // } catch {
+    throw new Error(`Could not load bundler config from "${configPath}".`);
+    // }
   }
 
   return bundlerConfig;

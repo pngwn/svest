@@ -42,7 +42,6 @@ export default [
     ...opts,
     input: 'src/main.ts',
     external: ['deasync'],
-
     output: [
       { file: pkg.module, format: 'es', sourcemap: false },
       { file: pkg.main, format: 'cjs', sourcemap: false },

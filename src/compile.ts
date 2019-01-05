@@ -10,6 +10,7 @@ export async function compile(filePath: string, name: string) {
       bundle = await rollup(config.input);
       try {
         code = await bundle.generate(config.output);
+        code = code.output[0];
       } catch (e) {
         throw new Error(e);
       }
@@ -24,6 +25,7 @@ export async function compile(filePath: string, name: string) {
     );
   }
 
+  console.log(code, bundler, config);
   return { code: code.code, map: code.map };
 }
 
