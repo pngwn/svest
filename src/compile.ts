@@ -10,7 +10,7 @@ export async function compile(filePath: string, name: string) {
       bundle = await rollup(config.input);
       try {
         code = await bundle.generate(config.output);
-        code = code.output[0];
+        code = code.output ? code.output[0] : code;
       } catch (e) {
         throw new Error(e);
       }
