@@ -4,7 +4,6 @@ const appRoot = require('app-root-path');
 
 export function generateRollup(
   filePath: string,
-  name: string,
   output: string,
   config: { input: any; output: any; plugins: any }
 ): any {
@@ -25,10 +24,9 @@ export function generateRollup(
       dev: false,
       sourcemap: true,
       format: 'iife',
-      name,
+      name: 'app',
       file: `${appRoot}/.svest_output/${output}.js`,
     },
   };
   return newConfig;
-  return merge(config, newConfig);
 }

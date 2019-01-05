@@ -4,9 +4,7 @@ module.exports = {
   coveragePathIgnorePatterns: ['node_modules', '.+fixtures.+'],
   testPathIgnorePatterns: ['/node_modules/', '.+fixtures.+'],
   testEnvironment: 'node',
-  transform: {
-    '^.+(\\.html$|\\.svelte$)': './jest.js',
-  },
+
   globals: {
     'ts-jest': {
       diagnostics: {

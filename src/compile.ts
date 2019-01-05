@@ -1,7 +1,23 @@
 import { generateOptions } from './bundle/generateOptions';
+import stack from 'callsite';
+import path from 'path';
 
-export async function compile(filePath: string, name: string) {
-  const [bundler, config] = generateOptions(filePath, name);
+export async function compile(relativeFilePath: string) {
+  let theStack = stack()
+    .filter(v => v.getFileName())
+    .map(v => v.getFileName())
+    .reverse();
+  const index = theStack.findIndex(v => v === __filename) - 1;
+
+  let filePath;
+
+  try {
+    filePath = path.resolve(path.dirname(theStack[index]), relativeFilePath);
+  } catch (e) {
+    throw new Error(e.message);
+  }
+
+  const [bundler, config] = generateOptions(filePath);
   let code;
   if (bundler === 'rollup') {
     const rollup = require('rollup').rollup;
@@ -12,10 +28,10 @@ export async function compile(filePath: string, name: string) {
         code = await bundle.generate(config.output);
         code = code.output ? code.output[0] : code;
       } catch (e) {
-        throw new Error(e);
+        throw new Error(e.message);
       }
     } catch (e) {
-      throw new Error(e);
+      throw new Error(e.message);
     }
   } else if (bundler === 'webpack') {
     code = await runWebpack(config);

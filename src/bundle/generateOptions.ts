@@ -13,16 +13,16 @@ export function outputName(filePath: string): string {
     .join('-');
 }
 
-export function generateOptions(filePath: string, name: string): [string, any] {
+export function generateOptions(filePath: string): [string, any] {
   const config = loadSvestConfig();
   const configPath = normalize(join(appRoot.path, config.bundlerConfig));
   const bundlerConfig = loadBundlerConfig(configPath);
   const output = outputName(filePath);
 
   if (config.bundler.toLowerCase() === 'rollup') {
-    return ['rollup', generateRollup(filePath, name, output, bundlerConfig)];
+    return ['rollup', generateRollup(filePath, output, bundlerConfig)];
   } else if (config.bundler.toLowerCase() === 'webpack') {
-    return ['webpack', generateWebpack(filePath, name, output, bundlerConfig)];
+    return ['webpack', generateWebpack(filePath, output, bundlerConfig)];
   } else {
     throw new Error(
       "Cannot recognise bundler option. Must be one of 'webpack' or 'rollup'."

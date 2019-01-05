@@ -9,7 +9,8 @@
     "lint": "eslint 'src/**' 'test/*.js'",
     "test": "yarn lint & jest --verbose",
     "test:watch": "jest --verbose --watch",
-    "test:cov": "yarn lint && jest --verbose --coverage"
+    "test:cov": "yarn lint && jest --verbose --coverage",
+    "test:ava": "ava test/it.ava.js"
   },
   "keywords": [
     "test",
@@ -55,9 +56,11 @@
   "dependencies": {
     "@pngwn/utils": "^0.1.0",
     "app-root-path": "^2.1.0",
+    "callsite": "^1.0.0",
+    "deasync": "^0.1.14",
     "esm": "^3.0.84",
-    "memory-fs": "^0.4.1",
-    "deasync": "^0.1.14"
+    "fibers": "^3.1.1",
+    "memory-fs": "^0.4.1"
   },
   "nyc": {
     "include": [
@@ -83,7 +86,8 @@
       "ts"
     ],
     "require": [
-      "ts-node/register"
+      "ts-node/register",
+      "esm"
     ]
   },
   "svest": {

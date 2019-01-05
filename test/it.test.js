@@ -1,5 +1,6 @@
-import App from './fixtures/example.html';
+import { compile } from '../src/main';
 
-test('smoke', () => {
+test('smoke', async () => {
+  const App = await compile('./fixtures/imported.html');
   expect(App).toBeTruthy();
 });

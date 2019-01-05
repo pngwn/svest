@@ -18,7 +18,7 @@ test('outputName: output name should return a string based upon the path', () =>
 
 test('generateOptions: if there is no test config or svest field in pkg.json it should throw an error', async () => {
   try {
-    await generateOptions('some/path/to/file.js', 'app');
+    await generateOptions('some/path/to/file.js');
   } catch (e) {
     expect(e).toEqual(
       new Error(
@@ -36,7 +36,7 @@ test('generateOptions: rollup configs should be processed correctly', async () =
     },
   });
 
-  const bundle = await generateOptions('path/to/file', 'app');
+  const bundle = await generateOptions('path/to/file');
   expect(bundle[1].input.perf).toBeFalsy();
 });
 
@@ -48,7 +48,7 @@ test('generateOptions: webpack configs should be processed correctly', async () 
     },
   });
 
-  const bundle = await generateOptions('path/to/file', 'app');
+  const bundle = await generateOptions('path/to/file');
   expect(bundle[1].module).toBeTruthy();
 });
 
@@ -61,7 +61,7 @@ test('generateOptions: other bundler types should throw an error', async () => {
   });
 
   try {
-    await generateOptions('path/to/file', 'app');
+    await generateOptions('path/to/file');
   } catch (e) {
     expect(e).toEqual(
       new Error(

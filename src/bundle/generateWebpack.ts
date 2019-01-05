@@ -5,7 +5,6 @@ const appRoot = require('app-root-path');
 
 export function generateWebpack(
   filePath: string,
-  name: string,
   output: string,
   config: { module: any; [x: string]: any }
 ): any {

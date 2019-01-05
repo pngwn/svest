@@ -31,7 +31,7 @@ test('should generate a valid webpack config', () => {
     devtool: 'source-map',
   };
 
-  const output = generateWebpack('path/to/file', 'app', '-path-to-file', {
+  const output = generateWebpack('path/to/file', '-path-to-file', {
     module: {
       rules: [
         {
@@ -54,7 +54,7 @@ test('should generate a valid webpack config', () => {
 });
 
 test('should take additional webpack loaders', () => {
-  const output = generateWebpack('path/to/file', 'app', '-path-to-file', {
+  const output = generateWebpack('path/to/file', '-path-to-file', {
     module: {
       rules: [
         {
@@ -97,7 +97,7 @@ test('if there is no svelte-loader present, it should throw with a helpful error
   };
 
   expect(() =>
-    generateWebpack('path/to/file', 'app', '-path-to-file', userConfig)
+    generateWebpack('path/to/file', '-path-to-file', userConfig)
   ).toThrowError(
     'Your rollup config must include svelte-loader in order to compile Svelte components.'
   );

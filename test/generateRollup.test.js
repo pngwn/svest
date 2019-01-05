@@ -21,12 +21,9 @@ test('should generate a valid rollup config', () => {
       file: `${appRoot}/.svest_output/-path-to-file.js`,
     },
   };
-  const { input, output } = generateRollup(
-    'path/to/file',
-    'app',
-    '-path-to-file',
-    { plugins: [svelte()] }
-  );
+  const { input, output } = generateRollup('path/to/file', '-path-to-file', {
+    plugins: [svelte()],
+  });
 
   expect(output).toEqual(expOutput);
   expect(input.input).toEqual(expInput.input);
@@ -39,12 +36,7 @@ test('should combine configs properly', () => {
     plugins: [svelte(), resolve(), commonjs()],
   };
 
-  const result = generateRollup(
-    'path/to/file',
-    'app',
-    '-path-to-file',
-    userConfig
-  );
+  const result = generateRollup('path/to/file', '-path-to-file', userConfig);
 
   expect(result.input.plugins[0].name).toBe('svelte');
   expect(result.input.plugins[1].name).toBe('node-resolve');
@@ -59,7 +51,7 @@ test('if there is no svelte plugin present, it should throw', () => {
   };
 
   expect(() =>
-    generateRollup('path/to/file', 'app', '-path-to-file', userConfig)
+    generateRollup('path/to/file', '-path-to-file', userConfig)
   ).toThrowError(
     'Your rollup config must include rollup-plugin-svelte in order to compile Svelte components.'
   );
@@ -71,7 +63,7 @@ test('if there is no svelte plugin present, it should throw', () => {
   };
 
   expect(() =>
-    generateRollup('path/to/file', 'app', '-path-to-file', userConfig)
+    generateRollup('path/to/file', '-path-to-file', userConfig)
   ).toThrowError(
     'Your rollup config must include rollup-plugin-svelte in order to compile Svelte components.'
   );
