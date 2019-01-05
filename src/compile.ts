@@ -1,15 +1,30 @@
 import { generateOptions } from './bundle/generateOptions';
 
 export async function compile(filePath: string, name: string) {
-  const [bundler, config] = await generateOptions(filePath, name);
-
+  const [bundler, config] = generateOptions(filePath, name);
+  let code;
   if (bundler === 'rollup') {
     const rollup = require('rollup').rollup;
-    const bundle = await rollup(config.input);
-    return await bundle.generate(config.output);
+    let bundle;
+    try {
+      bundle = await rollup(config.input);
+      try {
+        code = await bundle.generate(config.output);
+      } catch (e) {
+        throw new Error(e);
+      }
+    } catch (e) {
+      throw new Error(e);
+    }
   } else if (bundler === 'webpack') {
-    return await runWebpack(config);
+    code = await runWebpack(config);
+  } else {
+    throw new Error(
+      "Bundler name not recognised. Must be one of 'rollup' or 'webpack'."
+    );
   }
+
+  return { code: code.code, map: code.map };
 }
 
 async function runWebpack(config) {

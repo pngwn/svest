@@ -13,10 +13,7 @@ export function outputName(filePath: string): string {
     .join('-');
 }
 
-export async function generateOptions(
-  filePath: string,
-  name: string
-): Promise<[string, any]> {
+export function generateOptions(filePath: string, name: string): [string, any] {
   const config = loadSvestConfig();
   const configPath = normalize(join(appRoot.path, config.bundlerConfig));
   const bundlerConfig = loadBundlerConfig(configPath);

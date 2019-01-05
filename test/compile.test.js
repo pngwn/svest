@@ -4,7 +4,7 @@ const appRoot = require('app-root-path');
 
 afterEach(() => jest.resetModules());
 
-test('it should compile without dying', async () => {
+test('it should compile without dying: rollup', async () => {
   jest.setMock('../package.json', {
     svest: {
       bundler: 'rollup',
@@ -13,12 +13,13 @@ test('it should compile without dying', async () => {
   });
 
   const file = `${appRoot}/test/fixtures/imported.html`;
-  const compiled = await compile(file, 'app');
+  const { code, map } = await compile(file, 'app');
 
-  expect(compiled).toBeTruthy();
+  expect(code).toBeTruthy();
+  expect(map).toBeTruthy();
 });
 
-test('it should compile without dying: 2', async () => {
+test('it should compile without dying: webpack', async () => {
   jest.setMock('../package.json', {
     svest: {
       bundler: 'webpack',
@@ -27,9 +28,10 @@ test('it should compile without dying: 2', async () => {
   });
 
   const file = `${appRoot}/test/fixtures/imported.html`;
-  const compiled = await compile(file, 'app');
+  const { code, map } = await compile(file, 'app');
 
-  expect(compiled).toBeTruthy();
+  expect(code).toBeTruthy();
+  expect(map).toBeTruthy();
 });
 
 test('a bad webpack config should throw an error', async () => {
