@@ -1,5 +1,5 @@
-import { process } from '../jest';
-
+import { process } from '../jest.js';
+// const process = require('../jest.js');
 const appRoot = require('app-root-path');
 
 beforeAll(() => jest.resetModules());

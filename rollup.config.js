@@ -47,4 +47,13 @@ export default [
       { file: pkg.main, format: 'cjs', sourcemap: false },
     ],
   },
+  {
+    ...opts,
+    input: 'jest.ts',
+    external: () => true,
+    output: {
+      file: 'jest.js',
+      format: 'cjs',
+    },
+  },
 ];
