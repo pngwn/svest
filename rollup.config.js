@@ -3,8 +3,8 @@ import commonjs from 'rollup-plugin-commonjs';
 import json from 'rollup-plugin-json';
 import typescript from 'rollup-plugin-typescript';
 import pkg from './package.json';
-import fs from 'fs';
-import path from 'path';
+// import fs from 'fs';
+// import path from 'path';
 
 const opts = {
   plugins: [
