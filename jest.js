@@ -1,4 +1,4 @@
-const compile = require('./dist/main.es').compile;
+const compile = require('./dist/main.cjs').compile;
 const deasync = require('deasync');
 
 // eslint-disable-next-line
