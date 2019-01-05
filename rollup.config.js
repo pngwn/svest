@@ -19,32 +19,33 @@ const opts = {
   ],
 };
 
-let files = fs
-  .readdirSync(path.join(__dirname, 'src'))
-  .filter(v => path.extname(v) && v.indexOf('d.ts') < 0)
-  .map(v => path.join('src', v));
+// let files = fs
+//   .readdirSync(path.join(__dirname, 'src'))
+//   .filter(v => path.extname(v) && v.indexOf('d.ts') < 0)
+//   .map(v => path.join('src', v));
 
-files = files
-  .concat(
-    fs
-      .readdirSync(path.join(__dirname, 'src', 'bundle'))
-      .map(v => path.join('src', 'bundle', v))
-  )
-  .reduce((acc, next) => {
-    return {
-      ...acc,
-      [next.replace('src/', '').replace('.ts', '')]: next,
-    };
-  }, {});
+// files = files
+//   .concat(
+//     fs
+//       .readdirSync(path.join(__dirname, 'src', 'bundle'))
+//       .map(v => path.join('src', 'bundle', v))
+//   )
+//   .reduce((acc, next) => {
+//     return {
+//       ...acc,
+//       [next.replace('src/', '').replace('.ts', '')]: next,
+//     };
+//   }, {});
 
 export default [
   {
     ...opts,
-    input: files,
-    external: v => !v.match(/.*\/src\/.*/),
+    input: 'src/main.ts',
+    external: ['deasync'],
+
     output: [
-      { dir: 'dist/es', format: 'es', sourcemap: false },
-      { dir: 'dist/cjs', format: 'cjs', sourcemap: false },
+      { file: pkg.module, format: 'es', sourcemap: false },
+      { file: pkg.main, format: 'cjs', sourcemap: false },
     ],
   },
 ];
