@@ -27,6 +27,7 @@ export async function compile(relativeFilePath: string) {
       try {
         code = await bundle.generate(config.output);
         code = code.output ? code.output[0] : code;
+        code = new Function(`${code.code} return app;`)();
       } catch (e) {
         throw new Error(e.message);
       }
@@ -34,7 +35,11 @@ export async function compile(relativeFilePath: string) {
       throw new Error(e.message);
     }
   } else if (bundler === 'webpack') {
+    // I'm going to bail on webpack for the time being
+    throw new Error('Webpack is not currently Supported. Check back soon!');
     code = await runWebpack(config);
+    console.log(code.code);
+    code = new Function(`${code.code}`)();
   } else {
     throw new Error(
       "Bundler name not recognised. Must be one of 'rollup' or 'webpack'."
@@ -42,7 +47,11 @@ export async function compile(relativeFilePath: string) {
   }
 
   // console.log(code, bundler, config);
-  return { code: code.code, map: code.map };
+  // console.log(code.toString());
+  // console.log(new Function(`${code.code} return app;`)());
+  // console.log(new Function(`${code.code} return app;`)());
+  // console.log(new Function(`${code.code} return app;`)());
+  return { code };
 }
 
 async function runWebpack(config) {
@@ -70,7 +79,7 @@ async function runWebpack(config) {
       const { path, filename } = stats.compilation.outputOptions;
 
       const code = fs.readFileSync(`${path}/${filename}`).toString();
-      // const map = fs.readFileSync(`${path}/${filename}.map`).toString();
+
       res({ code });
     });
   });

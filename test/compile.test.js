@@ -18,14 +18,10 @@ test('it should compile without dying: rollup', async () => {
 
   const file = `${appRoot}/test/fixtures/imported.html`;
   const { code } = await compile(file, 'app');
-  console.log(code);
-  console.log(code);
-  console.log(code);
   expect(code).toBeTruthy();
-  // expect(map).toBeTruthy();
 });
 
-test('it should compile without dying: webpack', async () => {
+test.skip('it should compile without dying: webpack', async () => {
   jest.mock(
     '../svest.config.js',
     () => ({
@@ -53,7 +49,6 @@ test('it should compile without dying: webpack', async () => {
   const { code } = await compile(file, 'app');
 
   expect(code).toBeTruthy();
-  // expect(map).toBeTruthy();
 });
 
 test('a bad webpack config should throw an error', async () => {

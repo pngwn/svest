@@ -20,14 +20,15 @@ test('should generate a valid webpack config', () => {
           use: {
             loader: 'svelte-loader',
             options: {
-              format: 'iife',
+              format: 'esm',
               css: false,
+              dev: false,
             },
           },
         },
       ],
     },
-    mode: 'production',
+    mode: 'development',
     devtool: 'inline-source-map',
     plugins: [],
   };
