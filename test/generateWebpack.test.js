@@ -6,7 +6,7 @@ test('should generate a valid webpack config', () => {
   const expected = {
     entry: 'path/to/file',
     resolve: {
-      extensions: ['.js', '.html'],
+      extensions: ['.js', '.html', '.svelte'],
     },
     output: {
       path: `${appRoot}/.svest_output`,
@@ -28,7 +28,8 @@ test('should generate a valid webpack config', () => {
       ],
     },
     mode: 'production',
-    devtool: 'source-map',
+    devtool: 'inline-source-map',
+    plugins: [],
   };
 
   const output = generateWebpack('path/to/file', '-path-to-file', {

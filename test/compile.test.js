@@ -1,46 +1,84 @@
 import { compile } from '../src/compile';
+import svelte from 'rollup-plugin-svelte';
+import resolve from 'rollup-plugin-node-resolve';
 
 const appRoot = require('app-root-path');
 
 afterEach(() => jest.resetModules());
 
 test('it should compile without dying: rollup', async () => {
-  jest.setMock('../package.json', {
-    svest: {
+  jest.mock(
+    '../svest.config.js',
+    () => ({
       bundler: 'rollup',
-      bundlerConfig: './test/fixtures/rollup.test.js',
-    },
-  });
+      plugins: [svelte(), resolve()],
+    }),
+    { virtual: true }
+  );
 
   const file = `${appRoot}/test/fixtures/imported.html`;
-  const { code, map } = await compile(file, 'app');
-
+  const { code } = await compile(file, 'app');
+  console.log(code);
+  console.log(code);
+  console.log(code);
   expect(code).toBeTruthy();
-  expect(map).toBeTruthy();
+  // expect(map).toBeTruthy();
 });
 
 test('it should compile without dying: webpack', async () => {
-  jest.setMock('../package.json', {
-    svest: {
+  jest.mock(
+    '../svest.config.js',
+    () => ({
       bundler: 'webpack',
-      bundlerConfig: './test/fixtures/webpack.test.js',
-    },
-  });
+      module: {
+        rules: [
+          {
+            test: /\.html$/,
+            exclude: /node_modules/,
+            use: {
+              loader: 'svelte-loader',
+              options: {
+                format: 'cjs',
+                css: false,
+              },
+            },
+          },
+        ],
+      },
+    }),
+    { virtual: true }
+  );
 
   const file = `${appRoot}/test/fixtures/imported.html`;
-  const { code, map } = await compile(file, 'app');
+  const { code } = await compile(file, 'app');
 
   expect(code).toBeTruthy();
-  expect(map).toBeTruthy();
+  // expect(map).toBeTruthy();
 });
 
 test('a bad webpack config should throw an error', async () => {
-  jest.setMock('../package.json', {
-    svest: {
+  jest.setMock(
+    '../svest.config.js',
+    () => ({
       bundler: 'webpack',
-      bundlerConfig: './test/fixtures/webpack.badconfig.js',
-    },
-  });
+      module: {
+        rules: [
+          {
+            test: /\.html$/,
+            exclude: /node_modules/,
+            use: {
+              loader: 'svelte-loader',
+              options: {
+                format: 'spoon',
+                css: false,
+              },
+            },
+          },
+        ],
+      },
+    }),
+    { virtual: true }
+  );
 
   const file = `${appRoot}/test/fixtures/imported.html`;
   try {
@@ -51,12 +89,28 @@ test('a bad webpack config should throw an error', async () => {
 });
 
 test('a really bad webpack config should also throw an error', async () => {
-  jest.setMock('../package.json', {
-    svest: {
+  jest.mock(
+    '../svest.config.js',
+    () => ({
       bundler: 'webpack',
-      bundlerConfig: './test/fixtures/webpack.badconfig.js',
-    },
-  });
+      module: {
+        darules: [
+          {
+            test: /\.html$/,
+            exclude: /node_modules/,
+            use: {
+              loader: 'svelte-loader',
+              options: {
+                format: 'spoon',
+                css: false,
+              },
+            },
+          },
+        ],
+      },
+    }),
+    { virtual: true }
+  );
 
   const file = `${appRoot}/test/fixtures/imported.html`;
   try {

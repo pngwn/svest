@@ -70,8 +70,8 @@ async function runWebpack(config) {
       const { path, filename } = stats.compilation.outputOptions;
 
       const code = fs.readFileSync(`${path}/${filename}`).toString();
-      const map = fs.readFileSync(`${path}/${filename}.map`).toString();
-      res({ code, map });
+      // const map = fs.readFileSync(`${path}/${filename}.map`).toString();
+      res({ code });
     });
   });
 }

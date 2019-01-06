@@ -5,9 +5,9 @@ const appRoot = require('app-root-path');
 export function generateRollup(
   filePath: string,
   output: string,
-  config: { input: any; output: any; plugins: any }
+  plugins: [{ name }]
 ): any {
-  if (config.plugins.findIndex(v => v.name === 'svelte') === -1) {
+  if (plugins.findIndex(v => v.name === 'svelte') === -1) {
     throw new Error(
       'Your rollup config must include rollup-plugin-svelte in order to compile Svelte components.'
     );
@@ -17,12 +17,12 @@ export function generateRollup(
     input: {
       input: filePath,
       perf: false,
-      plugins: config.plugins,
+      plugins: plugins,
     },
     output: {
       generate: 'dom',
       dev: false,
-      sourcemap: true,
+      sourcemap: 'inline',
       format: 'iife',
       name: 'app',
       file: `${appRoot}/.svest_output/${output}.js`,

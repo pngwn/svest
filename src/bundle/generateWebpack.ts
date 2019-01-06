@@ -18,15 +18,17 @@ export function generateWebpack(
   const newConfig = {
     entry: filePath,
     resolve: {
-      extensions: ['.js', '.html'],
+      extensions: ['.js', '.html', '.svelte'],
     },
     output: {
       path: path.resolve(`${appRoot}/.svest_output`),
       filename: `${output}.js`,
     },
     mode: 'production',
-    devtool: 'source-map',
+    devtool: 'inline-source-map',
+    module: config.module,
+    plugins: config.plugins || [],
   };
-
+  return newConfig;
   return merge(newConfig, config);
 }

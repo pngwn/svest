@@ -1,7 +1,6 @@
 import { sep, normalize, join } from 'path';
 import { generateRollup } from './generateRollup';
 import { generateWebpack } from './generateWebpack';
-import { loadSvestConfig, loadBundlerConfig } from './loadConfig';
 
 const appRoot = require('app-root-path');
 
@@ -14,15 +13,27 @@ export function outputName(filePath: string): string {
 }
 
 export function generateOptions(filePath: string): [string, any] {
-  const config = loadSvestConfig();
-  const configPath = normalize(join(appRoot.path, config.bundlerConfig));
-  const bundlerConfig = loadBundlerConfig(configPath);
+  let config;
+  try {
+    config = require(`${appRoot}/svest.config.js`);
+  } catch (e) {
+    throw new Error(
+      "Ensure there is a 'svest.config.js' file in your root directory."
+    );
+  }
+
   const output = outputName(filePath);
 
   if (config.bundler.toLowerCase() === 'rollup') {
-    return ['rollup', generateRollup(filePath, output, bundlerConfig)];
+    return ['rollup', generateRollup(filePath, output, config.plugins)];
   } else if (config.bundler.toLowerCase() === 'webpack') {
-    return ['webpack', generateWebpack(filePath, output, bundlerConfig)];
+    return [
+      'webpack',
+      generateWebpack(filePath, output, {
+        plugins: config.plugins,
+        module: config.module,
+      }),
+    ];
   } else {
     throw new Error(
       "Cannot recognise bundler option. Must be one of 'webpack' or 'rollup'."

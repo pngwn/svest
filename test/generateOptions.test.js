@@ -1,5 +1,8 @@
 import { outputName, generateOptions } from '../src/bundle/generateOptions';
 
+import svelte from 'rollup-plugin-svelte';
+import resolve from 'rollup-plugin-node-resolve';
+
 const appRoot = require('app-root-path');
 
 beforeEach(() => {
@@ -16,37 +19,53 @@ test('outputName: output name should return a string based upon the path', () =>
   );
 });
 
-test('generateOptions: if there is no test config or svest field in pkg.json it should throw an error', async () => {
+test('if there is no svest config in root, it should throw an error', async () => {
   try {
     await generateOptions('some/path/to/file.js');
   } catch (e) {
-    expect(e).toEqual(
-      new Error(
-        "No config file detected. Ensure there is either a 'svest.config.js' file in your app root or a 'svest' field in your 'package.json'."
-      )
+    expect(e.message).toEqual(
+      "Ensure there is a 'svest.config.js' file in your root directory."
     );
   }
 });
 
 test('generateOptions: rollup configs should be processed correctly', async () => {
-  jest.setMock('../package.json', {
-    svest: {
+  jest.mock(
+    '../svest.config.js',
+    () => ({
       bundler: 'rollup',
-      bundlerConfig: './test/fixtures/rollup.test.js',
-    },
-  });
+      plugins: [svelte(), resolve()],
+    }),
+    { virtual: true }
+  );
 
   const bundle = await generateOptions('path/to/file');
   expect(bundle[1].input.perf).toBeFalsy();
 });
 
 test('generateOptions: webpack configs should be processed correctly', async () => {
-  jest.setMock('../package.json', {
-    svest: {
+  jest.mock(
+    '../svest.config.js',
+    () => ({
       bundler: 'webpack',
-      bundlerConfig: './test/fixtures/webpack.test.js',
-    },
-  });
+      module: {
+        rules: [
+          {
+            test: /\.html$/,
+            exclude: /node_modules/,
+            use: {
+              loader: 'svelte-loader',
+              options: {
+                format: 'cjs',
+                css: false,
+              },
+            },
+          },
+        ],
+      },
+    }),
+    { virtual: true }
+  );
 
   const bundle = await generateOptions('path/to/file');
   expect(bundle[1].module).toBeTruthy();
