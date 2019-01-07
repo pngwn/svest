@@ -1,1 +1,2 @@
-export { compile } from './compile'
+export { compile } from './compile';
+export { render } from './render';

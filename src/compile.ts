@@ -1,21 +1,23 @@
 import { generateOptions } from './bundle/generateOptions';
-import stack from 'callsite';
-import path from 'path';
+import { getPath } from './findLocation';
+import { isAbsolute } from 'path';
 
-export async function compile(relativeFilePath: string) {
-  let theStack = stack()
-    .filter(v => v.getFileName())
-    .map(v => v.getFileName())
-    .reverse();
-  const index = theStack.findIndex(v => v === __filename) - 1;
+export async function compile(path: string) {
+  // let theStack = stack()
+  //   .filter(v => v.getFileName())
+  //   .map(v => v.getFileName())
+  //   .reverse();
 
-  let filePath;
+  // const index = theStack.findIndex(v => v === __filename) - 1;
 
-  try {
-    filePath = path.resolve(path.dirname(theStack[index]), relativeFilePath);
-  } catch (e) {
-    throw new Error(e.message);
-  }
+  // let filePath;
+
+  // try {
+  //   filePath = path.resolve(path.dirname(theStack[index]), relativeFilePath);
+  // } catch (e) {
+  //   throw new Error(e.message);
+  // }
+  const filePath = isAbsolute(path) ? path : getPath(path);
 
   const [bundler, config] = generateOptions(filePath);
   let code;
@@ -27,7 +29,8 @@ export async function compile(relativeFilePath: string) {
       try {
         code = await bundle.generate(config.output);
         code = code.output ? code.output[0] : code;
-        code = new Function(`${code.code} return app;`)();
+        // console.log(code.code);
+        //code = new Function(`${code.code} return app;`)();
       } catch (e) {
         throw new Error(e.message);
       }
@@ -46,12 +49,7 @@ export async function compile(relativeFilePath: string) {
     );
   }
 
-  // console.log(code, bundler, config);
-  // console.log(code.toString());
-  // console.log(new Function(`${code.code} return app;`)());
-  // console.log(new Function(`${code.code} return app;`)());
-  // console.log(new Function(`${code.code} return app;`)());
-  return { code };
+  return { code: code.code };
 }
 
 async function runWebpack(config) {

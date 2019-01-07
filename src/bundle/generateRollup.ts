@@ -24,7 +24,7 @@ export function generateRollup(
       dev: false,
       sourcemap: 'inline',
       format: 'iife',
-      name: 'app',
+      name: 'App',
       file: `${appRoot}/.svest_output/${output}.js`,
     },
   };

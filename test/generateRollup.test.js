@@ -5,7 +5,7 @@ import svelte from 'rollup-plugin-svelte';
 
 const appRoot = require('app-root-path');
 
-test('should generate a valid rollup config', () => {
+test.skip('should generate a valid rollup config', () => {
   const { input: expInput, output: expOutput } = {
     input: {
       input: 'path/to/file',
