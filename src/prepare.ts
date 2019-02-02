@@ -1,4 +1,4 @@
-// We aren't doing this any more, will revisit
+import { compile } from 'svelte/compiler';
 
 const appRoot = require('app-root-path');
 import { sep } from 'path';
@@ -50,16 +50,32 @@ export function prepareTests(testSource: string, name: string): string {
 }
 
 export function prepareSvelte(component: string) {
-  console.log(component);
-  return component;
+  const vars = compile(component).stats.vars.map(v => v.name);
+
+  const splitComp = component.replace(
+    '</script>',
+    `
+    ${
+      vars.includes('afterUpdate')
+        ? ''
+        : "import { afterUpdate } from 'svelte';"
+    }
+      afterUpdate(() => {
+        window.vars = { ${vars.join(', ')} };
+      });
+    </script>`.trim()
+  );
+
+  return { file: splitComp, vars };
 }
 
 export function prepare(source, componentPath) {
   const { test, svelte } = splitSource(source);
   const name = generateName(componentPath);
-
+  const { file, vars } = prepareSvelte(svelte);
   return {
     test: prepareTests(test, name),
-    svelte: prepareSvelte(svelte),
+    svelte: file,
+    vars,
   };
 }
