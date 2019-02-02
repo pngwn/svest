@@ -1,36 +1,22 @@
+/* eslint-disable */
 import { generateOptions } from './bundle/generateOptions';
 import { getPath } from './findLocation';
 import { isAbsolute } from 'path';
 
 export async function compile(path: string) {
-  // let theStack = stack()
-  //   .filter(v => v.getFileName())
-  //   .map(v => v.getFileName())
-  //   .reverse();
-
-  // const index = theStack.findIndex(v => v === __filename) - 1;
-
-  // let filePath;
-
-  // try {
-  //   filePath = path.resolve(path.dirname(theStack[index]), relativeFilePath);
-  // } catch (e) {
-  //   throw new Error(e.message);
-  // }
   const filePath = isAbsolute(path) ? path : getPath(path);
 
   const [bundler, config] = generateOptions(filePath);
   let code;
+
   if (bundler === 'rollup') {
     const rollup = require('rollup').rollup;
     let bundle;
     try {
       bundle = await rollup(config.input);
       try {
-        code = await bundle.generate(config.output);
+        code = await bundle.write(config.output);
         code = code.output ? code.output[0] : code;
-        // console.log(code.code);
-        //code = new Function(`${code.code} return app;`)();
       } catch (e) {
         throw new Error(e.message);
       }
@@ -41,7 +27,6 @@ export async function compile(path: string) {
     // I'm going to bail on webpack for the time being
     throw new Error('Webpack is not currently Supported. Check back soon!');
     code = await runWebpack(config);
-    console.log(code.code);
     code = new Function(`${code.code}`)();
   } else {
     throw new Error(

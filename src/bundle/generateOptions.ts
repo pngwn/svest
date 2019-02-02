@@ -1,4 +1,4 @@
-import { sep, normalize, join } from 'path';
+import { sep, normalize } from 'path';
 import { generateRollup } from './generateRollup';
 import { generateWebpack } from './generateWebpack';
 

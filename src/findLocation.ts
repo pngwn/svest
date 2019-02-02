@@ -2,7 +2,7 @@ import stack from 'callsite';
 import path from 'path';
 
 export function getPath(relativeFilePath: string) {
-  let theStack = stack()
+  const theStack = stack()
     .filter(v => v.getFileName())
     .map(v => v.getFileName())
     .reverse();

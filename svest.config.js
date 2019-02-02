@@ -3,5 +3,5 @@ const resolve = require('rollup-plugin-node-resolve');
 
 module.exports = {
   bundler: 'rollup',
-  plugins: [svelte(), resolve()],
+  plugins: [svelte({ generate: 'dom', hydratable: true }), resolve()],
 };

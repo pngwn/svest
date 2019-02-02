@@ -3,7 +3,7 @@ module.exports = {
   watchPathIgnorePatterns: ['/__test-cache/', '.+fixtures.+'],
   coveragePathIgnorePatterns: ['node_modules', '.+fixtures.+'],
   testPathIgnorePatterns: ['/node_modules/', '.+fixtures.+'],
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
 
   globals: {
     'ts-jest': {

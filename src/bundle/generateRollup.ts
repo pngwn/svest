@@ -1,5 +1,3 @@
-import { merge } from '@pngwn/utils';
-
 const appRoot = require('app-root-path');
 
 export function generateRollup(
@@ -17,13 +15,12 @@ export function generateRollup(
     input: {
       input: filePath,
       perf: false,
-      plugins: plugins,
+      plugins,
     },
     output: {
-      generate: 'dom',
-      dev: false,
-      sourcemap: 'inline',
-      format: 'iife',
+      dev: true,
+      sourcemap: true,
+      format: 'cjs',
       name: 'App',
       file: `${appRoot}/.svest_output/${output}.js`,
     },

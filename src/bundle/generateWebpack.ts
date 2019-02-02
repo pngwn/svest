@@ -1,4 +1,3 @@
-import { merge } from '@pngwn/utils';
 import path from 'path';
 
 const appRoot = require('app-root-path');
@@ -33,5 +32,4 @@ export function generateWebpack(
     plugins: config.plugins || [],
   };
   return newConfig;
-  return merge(newConfig, config);
 }

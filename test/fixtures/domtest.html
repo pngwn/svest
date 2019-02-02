@@ -1,0 +1,15 @@
+<h1 bind:this={foo}>{name}</h1>
+<button on:click="{clicky}">Click</button>
+
+{#if condition}
+<p>I AM A WALRUS</p>
+{/if}
+
+<script>
+  export let name, foo;
+  let condition = false;
+  function clicky() {
+    condition = true;
+    name = 'Jeremy';
+  }
+</script>
