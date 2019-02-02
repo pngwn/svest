@@ -2,6 +2,7 @@ import {
   prepare,
   generateName,
   prepareTests,
+  prepareSvelte,
   splitSource,
 } from '../src/prepare';
 const appRoot = require('app-root-path');
@@ -208,5 +209,13 @@ test('prepare: should process single file testponents correctly', () => {
     font-family: monospace;
   }
 </style>`,
+  });
+});
+
+describe('prepareSvelte', () => {
+  test('generateName: generate a consistent name from the path', () => {
+    expect(generateName(`${appRoot}/test/Components/ComponentName.html`)).toBe(
+      'TestComponentsComponentName'
+    );
   });
 });

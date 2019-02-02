@@ -49,12 +49,17 @@ export function prepareTests(testSource: string, name: string): string {
     ${testSource}`;
 }
 
+export function prepareSvelte(component: string) {
+  console.log(component);
+  return component;
+}
+
 export function prepare(source, componentPath) {
   const { test, svelte } = splitSource(source);
   const name = generateName(componentPath);
 
   return {
     test: prepareTests(test, name),
-    svelte,
+    svelte: prepareSvelte(svelte),
   };
 }

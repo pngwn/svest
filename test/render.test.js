@@ -39,4 +39,3 @@ test('should work with dom-testing-library', async () => {
 
   cleanup();
 });
-//  () => component.$destroy()

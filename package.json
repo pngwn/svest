@@ -30,7 +30,7 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-typescript": "^0.14.0",
     "fs-extra": "^7.0.1",
-    "jest": "^23.6.0",
+    "jest": "^24.0.0",
     "jest-dom": "^3.0.0",
     "mock-require": "^3.0.2",
     "nyc": "^13.1.0",
