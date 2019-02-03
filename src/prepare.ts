@@ -39,14 +39,46 @@ export function generateName(path: string): string {
     .replace(/^[0-9]/, '$$$&');
 }
 
-export function prepareTests(testSource: string, name: string): string {
-  return `
-    import { render } from 'svest';
-    import ${name} from '../test-components/${name}.html'
+const testSetup = {
+  jest(setup, teardown) {
+    return {
+      imports: '\n',
+      setup: `    beforeAll(async () => {
+      ${setup}
+    });\n\n`,
+      teardown: `    afterAll(() => {
+      cleanup();
+    });\n`,
+    };
+  },
+};
 
-    const { container, window, ...testrefs } = render(${name});
+export function prepareTests(
+  testSource: string,
+  name: string,
+  vars: string[],
+  testlib: string
+): string {
+  const { imports, setup, teardown } = testSetup[
+    testlib
+  ](`const c = await render('../test-components/${name}.html');
+      window = c.window;
+      container = c.container;
+      cleanup = c.cleanup;`);
 
-    ${testSource}`;
+  return (
+    `
+    import { render } from 'svest';\n` +
+    imports +
+    '    let window; let container; let cleanup;\n' +
+    setup +
+    (testlib === 'jest' ? teardown : '') +
+    (vars && vars.length
+      ? '    const { ' + vars.join(', ') + ' } = window.vars;\n'
+      : '') +
+    '\n    ' +
+    testSource
+  );
 }
 
 export function prepareSvelte(component: string) {
@@ -69,12 +101,13 @@ export function prepareSvelte(component: string) {
   return { file: splitComp, vars };
 }
 
-export function prepare(source, componentPath) {
+export function prepare(source, componentPath, testlib) {
   const { test, svelte } = splitSource(source);
   const name = generateName(componentPath);
   const { file, vars } = prepareSvelte(svelte);
+
   return {
-    test: prepareTests(test, name),
+    test: prepareTests(test, name, vars, testlib),
     svelte: file,
     vars,
   };

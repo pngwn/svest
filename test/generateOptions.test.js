@@ -20,6 +20,7 @@ test('outputName: output name should return a string based upon the path', () =>
 });
 
 test('if there is no svest config in root, it should throw an error', async () => {
+  expect.assertions(1);
   try {
     await generateOptions('some/path/to/file.js');
   } catch (e) {
@@ -72,13 +73,14 @@ test('generateOptions: webpack configs should be processed correctly', async () 
 });
 
 test('generateOptions: other bundler types should throw an error', async () => {
-  jest.setMock('../package.json', {
-    svest: {
+  jest.mock(
+    '../svest.config.js',
+    () => ({
       bundler: 'parcel',
-      bundlerConfig: './test/fixtures/webpack.test.js',
-    },
-  });
-
+    }),
+    { virtual: true }
+  );
+  expect.assertions(1);
   try {
     await generateOptions('path/to/file');
   } catch (e) {

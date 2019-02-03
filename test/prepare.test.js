@@ -167,11 +167,20 @@ describe('generateName', () => {
 describe('prepareTests', () => {
   test('inject the necessary code', () => {
     const script = 'const func = str => str.toUpperCase();';
-    expect(prepareTests(script, 'Component')).toBe(`
+    expect(prepareTests(script, 'Component', [], 'jest')).toBe(`
     import { render } from 'svest';
-    import Component from '../test-components/Component.html'
 
-    const { container, window, ...testrefs } = render(Component);
+    let window; let container; let cleanup;
+    beforeAll(async () => {
+      const c = await render('../test-components/Component.html');
+      window = c.window;
+      container = c.container;
+      cleanup = c.cleanup;
+    });
+
+    afterAll(() => {
+      cleanup();
+    });
 
     const func = str => str.toUpperCase();`);
   });
@@ -235,12 +244,24 @@ describe('prepare', () => {
     }
   </style>`;
 
-    expect(prepare(script, `${appRoot}/test/Components/App.html`)).toEqual({
+    expect(
+      prepare(script, `${appRoot}/test/Components/App.html`, 'jest')
+    ).toEqual({
       test: `
     import { render } from 'svest';
-    import TestComponentsApp from '../test-components/TestComponentsApp.html'
 
-    const { container, window, ...testrefs } = render(TestComponentsApp);
+    let window; let container; let cleanup;
+    beforeAll(async () => {
+      const c = await render('../test-components/TestComponentsApp.html');
+      window = c.window;
+      container = c.container;
+      cleanup = c.cleanup;
+    });
+
+    afterAll(() => {
+      cleanup();
+    });
+    const { Example } = window.vars;
 
     test('it should do some test', () => {
       expect(true).toBe(true);
@@ -260,5 +281,40 @@ describe('prepare', () => {
   </style>`,
       vars: ['Example'],
     });
+  });
+
+  test('components without script tags should stay the same', () => {
+    const src = `<h1>Hello</h1>
+
+  <script context="test">
+    test('it should do some test', () => {
+      expect(true).toBe(true);
+    })
+  </script>`;
+
+    expect(prepare(src, `${appRoot}/test/Components/App.html`, 'jest')).toEqual(
+      {
+        test: `
+    import { render } from 'svest';
+
+    let window; let container; let cleanup;
+    beforeAll(async () => {
+      const c = await render('../test-components/TestComponentsApp.html');
+      window = c.window;
+      container = c.container;
+      cleanup = c.cleanup;
+    });
+
+    afterAll(() => {
+      cleanup();
+    });
+
+    test('it should do some test', () => {
+      expect(true).toBe(true);
+    })`,
+        svelte: `<h1>Hello</h1>`,
+        vars: [],
+      }
+    );
   });
 });
