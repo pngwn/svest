@@ -1,28 +1,43 @@
 const appRoot = require('app-root-path');
-
+import svelte from 'rollup-plugin-svelte';
+import { prepareSvelte } from '../prepare';
 export function generateRollup(
   filePath: string,
   output: string,
-  plugins: [{ name }]
+  config: any
 ): any {
-  if (plugins.findIndex(v => v.name === 'svelte') === -1) {
-    throw new Error(
-      'Your rollup config must include rollup-plugin-svelte in order to compile Svelte components.'
-    );
-  }
+  const rollupPlugins =
+    (config.rollupPlugins &&
+      config.rollupPlugins.filter(v => v.name !== 'svelte')) ||
+    [];
+
+  const compilerOptions = config.compilerOptions || {};
+  const preprocess =
+    config.compilerOptions && config.compilerOptions.preprocess
+      ? config.compilerOptions.preprocess
+      : [];
 
   const newConfig = {
     input: {
       input: filePath,
       perf: false,
-      plugins,
+      plugins: rollupPlugins.concat(
+        svelte({
+          ...compilerOptions,
+          preprocess: preprocess.concat({
+            markup({ content, filename }) {
+              console.log(filename, filePath);
+            },
+          }),
+        })
+      ),
     },
     output: {
       dev: true,
       sourcemap: true,
       format: 'cjs',
       name: 'App',
-      file: `${appRoot}/.svest_output/${output}.js`,
+      file: `${appRoot}/.svest_output/compiled/${output}.js`,
     },
   };
   return newConfig;

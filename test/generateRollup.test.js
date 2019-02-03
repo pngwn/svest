@@ -32,32 +32,34 @@ test.skip('should generate a valid rollup config', () => {
 });
 
 test('should combine configs properly', () => {
-  const plugins = [svelte(), resolve(), commonjs()];
+  const rollupPlugins = [svelte(), resolve(), commonjs()];
 
-  const result = generateRollup('path/to/file', '-path-to-file', plugins);
+  const result = generateRollup('path/to/file', '-path-to-file', {
+    rollupPlugins,
+  });
 
-  expect(result.input.plugins[0].name).toBe('svelte');
-  expect(result.input.plugins[1].name).toBe('node-resolve');
-  expect(result.input.plugins[2].name).toBe('commonjs');
+  expect(result.input.plugins[0].name).toBe('node-resolve');
+  expect(result.input.plugins[1].name).toBe('commonjs');
+  expect(result.input.plugins[2].name).toBe('svelte');
 });
 
 // mock-imports
 // later
-test('if there is no svelte plugin present, it should throw', () => {
-  const plugins = [resolve(), commonjs()];
+test.skip('if there is no svelte plugin present, it should throw', () => {
+  const rollupPlugins = [resolve(), commonjs()];
 
   expect(() =>
-    generateRollup('path/to/file', '-path-to-file', plugins)
+    generateRollup('path/to/file', '-path-to-file', { rollupPlugins })
   ).toThrowError(
     'Your rollup config must include rollup-plugin-svelte in order to compile Svelte components.'
   );
 });
 
-test('if there is no svelte plugin present, it should throw', () => {
-  const plugins = [resolve(), commonjs()];
+test.skip('if there is no svelte plugin present, it should throw', () => {
+  const rollupPlugins = [resolve(), commonjs()];
 
   expect(() =>
-    generateRollup('path/to/file', '-path-to-file', plugins)
+    generateRollup('path/to/file', '-path-to-file', { rollupPlugins })
   ).toThrowError(
     'Your rollup config must include rollup-plugin-svelte in order to compile Svelte components.'
   );

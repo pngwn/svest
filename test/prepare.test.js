@@ -280,6 +280,7 @@ describe('prepare', () => {
     }
   </style>`,
       vars: ['Example'],
+      name: 'TestComponentsApp',
     });
   });
 
@@ -314,6 +315,7 @@ describe('prepare', () => {
     })`,
         svelte: `<h1>Hello</h1>`,
         vars: [],
+        name: 'TestComponentsApp',
       }
     );
   });

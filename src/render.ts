@@ -6,7 +6,9 @@ const appRoot = require('app-root-path');
 
 export const render = async (path: string, data: object = {}) => {
   await compile(path);
-  const App = require(`${appRoot}/.svest_output/-test-${outputName(path)}.js`);
+  const App = require(`${appRoot}/.svest_output/compiled/-test-${outputName(
+    path
+  )}.js`);
 
   const container = document.body.appendChild(document.createElement('div'));
   const component = new App({

@@ -1,3 +1,6 @@
+// going back to not using this
+// but i still want top level component vars
+
 import { compile } from 'svelte/compiler';
 
 const appRoot = require('app-root-path');
@@ -32,7 +35,10 @@ export function splitSource(source: string): SourceObject {
 }
 
 export function generateName(path: string): string {
-  const re = new RegExp(`${appRoot}|.html|.svelte|${sep}|[^a-zA-Z0-9]`, 'g');
+  const re = new RegExp(
+    `${appRoot}|.html|.svelte|${sep}|[^a-zA-Z0-9]|svest|.test`,
+    'g'
+  );
   return path
     .replace(re, '')
     .replace(/(^[a-zA-Z])([^]*)/g, (_, p1, p2) => `${p1.toUpperCase()}${p2}`)
@@ -110,5 +116,6 @@ export function prepare(source, componentPath, testlib) {
     test: prepareTests(test, name, vars, testlib),
     svelte: file,
     vars,
+    name,
   };
 }
