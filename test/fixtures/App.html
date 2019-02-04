@@ -1,0 +1,13 @@
+<script>
+  let name = '',
+    input,
+    button,
+    p;
+  function click() {
+    name = 'Benjamin';
+  }
+</script>
+
+<input bind:this="{input}" bind:value="{name}" placeholder="enter your name" />
+<p bind:this="{p}">Hello {name || 'stranger'}!</p>
+<button bind:this="{button}" on:click="{click}">Click me</button>

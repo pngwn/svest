@@ -22,7 +22,9 @@ export const render = async (path: string, data: object = {}) => {
     // ...dom.window.testrefs,
     ...getQueriesForElement(container),
     cleanup: () => component.$destroy(),
+    //@ts-ignore
+    ...window.vars,
   };
 };
 
-export { fireEvent } from 'dom-testing-library';
+export { fireEvent, getNodeText } from 'dom-testing-library';

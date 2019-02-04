@@ -23,12 +23,15 @@ export function generateRollup(
       perf: false,
       plugins: rollupPlugins.concat(
         svelte({
-          ...compilerOptions,
-          preprocess: preprocess.concat({
+          //...compilerOptions,
+          preprocess: {
             markup({ content, filename }) {
-              console.log(filename, filePath);
+              if (filename === filePath) {
+                console.log('transformed', prepareSvelte(content).file);
+                return { code: prepareSvelte(content).file, map: '' };
+              }
             },
-          }),
+          },
         })
       ),
     },
@@ -40,5 +43,6 @@ export function generateRollup(
       file: `${appRoot}/.svest_output/compiled/${output}.js`,
     },
   };
+  console.log(newConfig.input.plugins);
   return newConfig;
 }

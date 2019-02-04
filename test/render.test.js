@@ -1,4 +1,4 @@
-import { render, fireEvent } from '../src/render';
+import { render, fireEvent, getNodeText } from '../src/render';
 import 'jest-dom/extend-expect';
 
 test('it should render a component to the dom and return a container', async () => {
@@ -36,6 +36,21 @@ test('should work with dom-testing-library', async () => {
 
   expect(getByText('I AM A WALRUS')).toBeTruthy();
   expect(name).toHaveTextContent('Jeremy');
+
+  cleanup();
+});
+
+test('component vars should be available', async () => {
+  const { input, button, cleanup, p } = await render('./fixtures/App.html');
+
+  expect(input.value).toBe('');
+
+  await fireEvent.click(button);
+  expect(input.value).toBe('Benjamin');
+
+  input.value = 'Franklin';
+  await fireEvent.input(input);
+  expect(getNodeText(p)).toBe('Hello Franklin!');
 
   cleanup();
 });
