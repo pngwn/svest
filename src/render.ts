@@ -1,13 +1,17 @@
 import { compile } from './compile';
 import { outputName } from './bundle/generateOptions';
 import { getQueriesForElement } from 'dom-testing-library';
+import { getPath } from './findLocation';
+import { isAbsolute } from 'path';
 
 const appRoot = require('app-root-path');
 
 export const render = async (path: string, data: object = {}) => {
-  await compile(path);
+  const filePath = isAbsolute(path) ? path : getPath(path);
+
+  await compile(filePath);
   const App = require(`${appRoot}/.svest_output/compiled/-test-${outputName(
-    path
+    filePath
   )}.js`);
 
   const container = document.body.appendChild(document.createElement('div'));
