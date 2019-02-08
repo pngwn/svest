@@ -1,7 +1,7 @@
 // going back to not using this
 // but i still want top level component vars
 
-import { compile } from 'svelte/compiler';
+const compile = require('svelte/compiler').compile;
 
 const appRoot = require('app-root-path');
 import { sep } from 'path';
