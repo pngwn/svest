@@ -23,7 +23,7 @@ export default [
   {
     ...opts,
     input: 'src/main.ts',
-    external: ['callsite'],
+    external: ['callsite', 'rollup-plugin-svelte', 'svelte'],
     output: [
       { file: pkg.module, format: 'es', sourcemap: false },
       { file: pkg.main, format: 'cjs', sourcemap: false },
