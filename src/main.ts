@@ -1,2 +1,2 @@
 export { compile } from './compile';
-export { render } from './render';
+export { render, fireEvent, getNodeText } from './render';
