@@ -1,6 +1,7 @@
 const appRoot = require('app-root-path');
 import svelte from 'rollup-plugin-svelte';
 import { prepareSvelte } from '../prepare';
+
 export function generateRollup(
   filePath: string,
   output: string,
@@ -27,7 +28,6 @@ export function generateRollup(
           preprocess: {
             markup({ content, filename }) {
               if (filename === filePath) {
-                console.log('transformed', prepareSvelte(content).file);
                 return { code: prepareSvelte(content).file, map: '' };
               }
             },
@@ -43,6 +43,5 @@ export function generateRollup(
       file: `${appRoot}/.svest_output/compiled/${output}.js`,
     },
   };
-  console.log(newConfig.input.plugins);
   return newConfig;
 }

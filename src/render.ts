@@ -7,10 +7,11 @@ import { isAbsolute } from 'path';
 const appRoot = require('app-root-path');
 
 export const render = async (path: string, data: object = {}) => {
+  console.log(path);
   const filePath = isAbsolute(path) ? path : getPath(path);
 
   await compile(filePath);
-  const App = require(`${appRoot}/.svest_output/compiled/-test-${outputName(
+  const App = require(`${appRoot}/.svest_output/compiled/${outputName(
     filePath
   )}.js`);
 

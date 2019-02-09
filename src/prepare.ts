@@ -88,7 +88,6 @@ export function prepareTests(
 }
 
 export function prepareSvelte(component: string) {
-  console.log(compile(component));
   const vars = compile(component).stats.vars.map(v => v.name);
 
   const splitComp = component.replace(
