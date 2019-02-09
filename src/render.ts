@@ -28,7 +28,7 @@ export const render = async (path: string, data: object = {}) => {
     ...getQueriesForElement(container),
     cleanup: () => component.$destroy(),
     //@ts-ignore
-    ...window.vars,
+    vars,
   };
 };
 
