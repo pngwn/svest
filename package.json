@@ -1,6 +1,6 @@
 {
   "name": "svest",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "description": "Testing utilities for svelte",
   "main": "dist/main.cjs.js",
   "module": "dist/main.es.js",
