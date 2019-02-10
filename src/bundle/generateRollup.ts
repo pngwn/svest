@@ -21,6 +21,7 @@ export function generateRollup(
   const newConfig = {
     input: {
       input: filePath,
+      onwarn: () => false,
       perf: false,
       plugins: rollupPlugins.concat(
         svelte({
