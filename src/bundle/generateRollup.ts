@@ -40,7 +40,7 @@ export function generateRollup(
       sourcemap: true,
       format: 'cjs',
       name: 'App',
-      file: `${appRoot}/.svest_output/compiled/${output}.js`,
+      dir: `${appRoot}/.svest_output/compiled/${output}`,
     },
   };
   return newConfig;

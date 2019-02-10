@@ -41,16 +41,16 @@ test('should work with dom-testing-library', async () => {
 });
 
 test('component vars should be available', async () => {
-  const { input, button, cleanup, p } = await render('./fixtures/App.html');
+  const { vars, cleanup } = await render('./fixtures/App.html');
 
-  expect(input.value).toBe('');
+  expect(vars.input.value).toBe('');
 
-  await fireEvent.click(button);
-  expect(input.value).toBe('Benjamin');
+  await fireEvent.click(vars.button);
+  expect(vars.input.value).toBe('Benjamin');
 
-  input.value = 'Franklin';
-  await fireEvent.input(input);
-  expect(getNodeText(p)).toBe('Hello Franklin!');
+  vars.input.value = 'Franklin';
+  await fireEvent.input(vars.input);
+  expect(getNodeText(vars.p)).toBe('Hello Franklin!');
 
   cleanup();
 });

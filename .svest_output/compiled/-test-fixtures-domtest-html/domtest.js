@@ -419,4 +419,4 @@ class Domtest extends SvelteComponent {
 }
 
 module.exports = Domtest;
-//# sourceMappingURL=-test-fixtures-domtest-html.js.map
+//# sourceMappingURL=domtest.js.map
